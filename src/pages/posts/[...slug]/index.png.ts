@@ -27,8 +27,8 @@ export const GET: APIRoute = async ({ props }) => {
   }
 
   const [regularData, boldData] = await Promise.all([
-    loadFontFile("noto-sans-sc-chinese-simplified-400-normal.woff2"),
-    loadFontFile("noto-sans-sc-chinese-simplified-700-normal.woff2"),
+    loadFontFile("noto-sans-sc-chinese-simplified-400-normal.woff"),
+    loadFontFile("noto-sans-sc-chinese-simplified-700-normal.woff"),
   ]);
 
   const svg = await satori(

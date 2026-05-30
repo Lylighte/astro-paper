@@ -20,7 +20,7 @@
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
     "@fontsource/noto-sans-sc": "^5.2.9",
-    "@tailwindcss/vite": "^4.3.0",
+    "@tailwindcss/vite": "^4.2.0",
     "astro": "^6.3.3",
     "dayjs": "^1.11.20",
     "lodash.kebabcase": "^4.1.1",
