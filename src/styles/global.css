@@ -10,6 +10,10 @@
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
   }
+  /* Ensure .font-app applies the CSS variable font stack */
+  .font-app {
+    font-family: var(--font-app);
+  }
   a,
   button {
     @apply outline-accent outline-offset-1 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;

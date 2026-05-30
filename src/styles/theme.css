@@ -7,7 +7,8 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --font-app: var(--font-google-sans-code);
+  /* App font: prefer Google Sans Code for Latin, fall back to common CJK/system fonts */
+  --font-app: var(--font-google-sans-code), "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Hiragino Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 /* Light theme values */
