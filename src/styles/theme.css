@@ -15,7 +15,8 @@
 [data-theme="light"] {
   --background: #fdfdfd;
   --foreground: #282728;
-  --accent: #006cac;
+  /* --accent: #006cac; */
+  --accent: #9966cc;
   --accent-foreground: #ffffff;
   --muted: #e6e6e6;
   --muted-foreground: #6b7280;
@@ -26,9 +27,11 @@
 [data-theme="dark"] {
   --background: #212737;
   --foreground: #eaedf3;
-  --accent: #ff6b01;
+  /* --accent: #ff6b01; */
+  --accent: #b88eef;
   --accent-foreground: #ffffff;
   --muted: #343f60;
   --muted-foreground: #afb9ca;
-  --border: #ab4b08;
+  /* --border: #ab4b08; */
+  --border: #9966cc;
 }
