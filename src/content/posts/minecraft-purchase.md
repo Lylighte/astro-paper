@@ -1,6 +1,7 @@
 ---
 title: "详细的 Minecraft 正版安装教程"
 pubDatetime: 2026-01-20T15:51:38+08:00
+draft: true
 tags:
   - Tutorial
   - Minecraft
