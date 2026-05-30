@@ -7,7 +7,20 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --font-app: var(--font-google-sans-code);
+  --font-app: var(--font-sans-app);
+  --font-code: var(--font-mono-app);
+}
+
+:root,
+[data-theme="light"],
+[data-theme="dark"] {
+  --font-sans-app:
+    Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei UI", "Microsoft YaHei", "Segoe UI", sans-serif;
+  --font-mono-app:
+    "SFMono-Regular", "Cascadia Mono", "Cascadia Code", "Sarasa Mono SC",
+    "Noto Sans Mono CJK SC", "Microsoft YaHei Mono", "Segoe UI Mono",
+    Consolas, "Liberation Mono", monospace;
 }
 
 /* Light theme values */
