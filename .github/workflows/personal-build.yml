@@ -1,0 +1,57 @@
+name: CI: Build & Deploy (personal → build)
+
+on:
+  push:
+    branches: [ 'personal' ]
+    paths-ignore:
+      - '**/*.md'
+      - 'public/media/**'
+      - 'public/images/**'
+      - '**/*.png'
+      - '**/*.jpg'
+      - '**/*.jpeg'
+      - '**/*.gif'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Push dist to build branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          # Create/overwrite the build branch with current dist
+          git checkout -B build
+          git add -f dist/
+          if git commit -m "chore: deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')"; then
+            git push origin build --force
+          else
+            echo "No changes to commit"
+          fi
