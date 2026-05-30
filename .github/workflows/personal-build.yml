@@ -1,4 +1,4 @@
-name: CI: Build & Deploy (personal → build)
+name: "CI: Build & Deploy (personal → build)"
 
 on:
   push:
