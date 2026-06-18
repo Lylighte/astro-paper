@@ -14,7 +14,7 @@ description: "FRP (Fast Reverse Proxy) 简易教程，可用于远程访问内�
 
 准备一台有公网 IP 的云服务器。以阿里云轻量服务器 2c2g、Ubuntu 24.04 为例，通过域名 `example.com` 访问。
 
-去 https://github.com/fatedier/frp/releases 下载 `frp_<version>_linux_amd64.tar.gz`，解压之：
+去 [https://github.com/fatedier/frp/releases](https://github.com/fatedier/frp/releases) 下载 `frp_<version>_linux_amd64.tar.gz`，解压之：
 
 ```bash
 wget https://github.com/fatedier/frp/releases/download/v0.68.0/frp_0.68.0_linux_amd64.tar.gz
@@ -35,7 +35,7 @@ auth.token = "your-strong-secure-token"
 
 ### 服务提供商
 
-如 SakuraFrp (https://www.natfrp.com)，注册登录后可以创建隧道，获得一份指定的配置。
+如 SakuraFrp ([https://www.natfrp.com](https://www.natfrp.com))，注册登录后可以创建隧道，获得一份指定的配置。
 
 ## 客户端
 

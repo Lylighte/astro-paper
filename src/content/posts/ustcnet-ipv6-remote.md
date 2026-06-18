@@ -61,7 +61,7 @@ description: "利用 ustcnet + NameSilo + Cloudflare + ddns-go + sunshine 搭建
 
 虽然 80/443 端口被封导致我们无法搭建标准的 Web 服务，但不影响自定义端口实现远程桌面/串流。
 
-> 参见：校园网常见问题与快速自查指南 - USTCLUG https://lug.ustc.edu.cn/wiki/doc/ustcnet-faq/
+> 参见：校园网常见问题与快速自查指南 - USTCLUG [https://lug.ustc.edu.cn/wiki/doc/ustcnet-faq/](https://lug.ustc.edu.cn/wiki/doc/ustcnet-faq/)
 
 ---
 
@@ -83,7 +83,7 @@ NameSilo 提供支付宝支付选项。注意购买时取消所有额外的付�
 
 > 域名与托管的详细部分参考视频教程（其实是懒得写了）：
 > 
-> 如何低成本获得一个域名，托管Cloudflare免费DNS - 技术爬爬虾 https://www.bilibili.com/video/BV1Mz421e76M
+> 如何低成本获得一个域名，托管Cloudflare免费DNS - 技术爬爬虾 [https://www.bilibili.com/video/BV1Mz421e76M](https://www.bilibili.com/video/BV1Mz421e76M)
 
 此时你应该已经拥有一个域名，并成功托管到 Cloudflare，在 Cloudflare 页面中可以管理 DNS 记录。在个人账户中获取一个 API Token，后续 DDNS-GO 会用到。
 
@@ -142,7 +142,7 @@ NameSilo 提供支付宝支付选项。注意购买时取消所有额外的付�
 
 打开设置 -> 系统 -> 远程桌面，将开关设置为「开」。接下来要修改 RDP 端口，包括 Powershell 执行修改命令、配置 Windows 防火墙。
 
-> 修改教程参见：更改计算机上的远程桌面的侦听端口 - Microsoft https://learn.microsoft.com/zh-cn/windows-server/remote/remote-desktop-services/remotepc/change-listening-port?tabs=powershell
+> 修改教程参见：更改计算机上的远程桌面的侦听端口 - Microsoft [https://learn.microsoft.com/zh-cn/windows-server/remote/remote-desktop-services/remotepc/change-listening-port?tabs=powershell](https://learn.microsoft.com/zh-cn/windows-server/remote/remote-desktop-services/remotepc/change-listening-port?tabs=powershell)
 
 特别地，远程桌面连接需要提供用户凭证，因此请确保你知道宿主机的用户名和密码，这里选用微软账号登录。
 
@@ -152,7 +152,7 @@ NameSilo 提供支付宝支付选项。注意购买时取消所有额外的付�
 
 「**Sunshine** 是 Moonlight 的自托管游戏**串流服务端**。我们提供低延迟、云游戏服务器功能，支持 AMD、Intel 和 Nvidia GPU 进行硬件编码，同时也支持软件编码。您可以使用 Moonlight 客户端在各种设备上连接到 Sunshine。我们提供了 Web 用户界面，您可以通过您喜欢的 Web 浏览器进行配置和客户端配对，无论是从本地服务器还是从任何移动设备上。」——Sunshine 官方页面
 
-Sunshine 不受 Windows 版本功能限制。前往 https://app.lizardbyte.dev/Sunshine 在页面最下方下载适用于 Windows 的 Sunshine 安装包，安装并运行。
+Sunshine 不受 Windows 版本功能限制。前往 [https://app.lizardbyte.dev/Sunshine](https://app.lizardbyte.dev/Sunshine) 在页面最下方下载适用于 Windows 的 Sunshine 安装包，安装并运行。
 
 > 配置教程参见：
 > 

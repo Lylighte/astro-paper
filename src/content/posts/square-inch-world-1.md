@@ -53,7 +53,7 @@ description: "（草稿）方寸天地 Minecraft 微缩建筑作品征集活动�
 
 使用 Minecraft 作为建模工具，采用线上提交作品的形式，面向全校征集微缩建筑作品。
 
-作品形式灵感来自【Minecraft15×15小建筑】 https://www.bilibili.com/video/BV1HkaazdEKE/
+作品形式灵感来自【Minecraft15×15小建筑】 [https://www.bilibili.com/video/BV1HkaazdEKE/](https://www.bilibili.com/video/BV1HkaazdEKE/)
 
 #### 活动开始前（-1.31）
 
