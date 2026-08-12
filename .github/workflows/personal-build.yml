@@ -5,7 +5,7 @@ on:
     branches:
       - personal
     paths-ignore:
-      - '**/*.md'
+      - '*.md'
       - 'public/media/**'
       - 'public/images/**'
       - '**/*.png'
