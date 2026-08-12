@@ -58,7 +58,11 @@ authlib-injector 为 Minecraft 提供了外置登录能力，其 [服务端技�
 
 ### 2.2 Yggdrasil Connect 提案（YggC）
 
-[Yggdrasil Connect 提案](https://github.com/yushijinhun/authlib-injector/issues/268)（2025-01-17 由 tnqzh123 提出）旨在基于 OAuth 2.0 + OpenID Connect 取代 Yggdrasil API 的登录部分。其要点包括：
+[Yggdrasil Connect 提案](https://github.com/yushijinhun/authlib-injector/issues/268)（2025-01-17 由 tnqzh123 提出）旨在基于 OAuth 2.0 + OpenID Connect 取代 Yggdrasil API 的登录部分。
+
+推测「Connect」一词有两层含义——其一，它描述的是把「外部身份源」与「Yggdrasil 游戏身份」两套身份系统连接起来的动作；其二，它直接借用了 OpenID Connect（OIDC）的构词——OIDC 的名字含义是「把身份认证（OpenID）连接到授权层（OAuth 2.0）」，YggC 即「通过 OAuth 2.0 / OIDC 连接起来的 Yggdrasil」。
+
+其要点包括：
 
 - **服务发现**：Yggdrasil meta 增加 `feature.openid_configuration_url` 指向 OpenID Provider 元数据；
 - **应用注册**：主动注册、动态注册（DCR）、公用应用（`shared_client_id`）三种方式；
@@ -424,6 +428,31 @@ OAuth：社区身份验证（任意方式）→ 授权 → yggdrasil token  ← 
 
 ---
 
+## 9. 后记
+
+社区里还有一批开源方案，它们同样没有去实现 OAuth 获取游戏令牌，但在其他功能上做得非常出色。
+
+### 9.1 YuDream Admin：通用管理平台里的皮肤站
+
+[YuDream Admin](https://github.com/mcyudream/YuDream-Admin) 是一个以 Java 21、Spring Boot 3 和 Vue 3 构建的**通用管理平台**，通过插件运行时将业务功能与平台核心解耦。它本身不是皮肤站，而是「可以作为宿主平台承载业务插件」的底座，其官方业务插件仓库 [yudream-admin-plugins](https://github.com/mcyudream/yudream-admin-plugins) 中与 Minecraft 相关的插件包括：
+
+- **`authlib-injector` 插件**：实现了标准 Yggdrasil API（`/authserver/authenticate`、`refresh`、`join`、`hasJoined`、`profile` 等），通过平台系统用户（`accountSource: "system-user"`）进行**密码登录**。其 meta 输出中**没有** `feature.openid_configuration_url`，也**没有实现任何 OAuth/YggC**；
+- **`yudream-skin` 插件**：皮肤系统（角色、材质、衣柜、迁移等），通过 `PluginSkinService` SPI 与 authlib-injector 插件协作；
+- 其他插件：`minecraft-server`（服务器管理）、`minecraft-activity-proof`（活动证明）、`qq-binding`（QQ 绑定）、`qqbot-automation`（QQ 机器人自动化）等。
+
+在正文 4.4 小结的两个维度上，YuDream 属于「**OIDC 登录皮肤站 ❌ / OAuth 获取游戏令牌 ❌**」，它完全走传统密码登录路线。但它的价值恰恰在于**平台化**：把皮肤站、服务器管理、QQ 绑定、机器人自动化等能力统一到一个插件化底座上，这对「既要皮肤站、又要社区运营工具」的站点很有吸引力。它印证了正文 7.1 的判断——社区站的根本动力是「身份确认」，密码登录已能完成，而 YuDream 选择把精力放在「身份之外」的社区功能上。
+
+### 9.2 社区教程：传统密码与 YggC 两条路线的并存
+
+另有两篇 B 站社区教程，代表了「传统密码」与「YggC」两条路线的社区实践：
+
+- [四氧化三猫的《全站最详细开服教程》](https://www.bilibili.com/opus/1205570442142679042)（2026-05）：用 Caddy + PHP 8.1 + MySQL 部署 **Blessing Skin + yggdrasil-api 插件**，走的是**传统密码登录**（非 YggC），面向新手保姆级教学；
+- [江苏大学 Minecraft 同好会的《开箱即用的 Blessing Skin 容器化部署方案》](https://www.bilibili.com/opus/1202506743186194433)（2026-05）：基于 [Dainsleif233/skin-docker](https://github.com/Dainsleif233/skin-docker)，**实现了 YggC**（Janus + yggdrasil-connect 插件），解决了「BS 无容器化方案 + YggC 需外挂 Janus」的痛点；作者在评论中也提到「如果没有拓展性需求，建议用 Drasl 这种部署友好的项目」。
+
+这两篇教程说明：即便在社区层面，**「传统密码」与「YggC」两条路线也在并存**——前者面向「够用就好」的多数场景，后者面向「需要 OAuth 拓展性」的少数场景。这与正文的结论一致：OAuth 桥接的价值只在特定身份源场景中体现，而社区生态的多样性恰恰是「无统一标准」下的自然结果。
+
+---
+
 ## 参考链接
 
 1. [Yggdrasil Connect Specification (Public Review) - authlib-injector issue #268](https://github.com/yushijinhun/authlib-injector/issues/268)
@@ -443,3 +472,7 @@ OAuth：社区身份验证（任意方式）→ 授权 → yggdrasil token  ← 
 15. [LittleSkin 邮件工单说明（对外支持邮箱）](https://github.com/LittleSkinChina/manual-ng/blob/master/docs/email.md)
 16. [Blessing Skin Server issue #674 - PHP 8.1 终止维护与维护状态声明](https://github.com/bs-community/blessing-skin-server/issues/674)
 17. [部署 Minecraft 皮肤站实现外置登录 - GBwater 的博客](https://gbwater.icu/post/100)
+18. [YuDream Admin - GitHub](https://github.com/mcyudream/YuDream-Admin)
+19. [YuDream Admin 官方业务插件仓库（authlib-injector / yudream-skin 等）- GitHub](https://github.com/mcyudream/yudream-admin-plugins)
+20. [全站最详细开服教程（Blessing Skin + yggdrasil-api 传统密码登录）- 四氧化三猫，Bilibili](https://www.bilibili.com/opus/1205570442142679042)
+21. [开箱即用的 Blessing Skin 容器化部署方案（YggC + Janus）- 江苏大学 Minecraft 同好会，Bilibili](https://www.bilibili.com/opus/1202506743186194433)
