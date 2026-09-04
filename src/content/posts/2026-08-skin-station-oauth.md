@@ -29,23 +29,23 @@ description: "围绕皮肤站能否用 OAuth 替代传统 Yggdrasil 密码登录
 
 authlib-injector 外置登录利用了 Minecraft 自带的 Yggdrasil 鉴权认证系统，是多人游戏中用户身份认证的主流手段之一。
 
-传统 Yggdrasil API 的登录接口需要启动器直接收集账号密码并在 HTTP 请求中明文发送，且几乎没有为二步验证留出设计空间。Mojang 选择将账号体系迁移至 Microsoft 账号，在 2023 年 12 月完成；LittleSkin 则宣布支持通过 OAuth 获取用以访问 Yggdrasil API 的 Minecraft 令牌。
+传统 Yggdrasil API 的登录接口需要启动器直接收集账号密码，且几乎没有为二步验证留出设计空间；在 HTTP 请求中，这些敏感内容会被明文发送。Mojang 选择将账号体系迁移至 Microsoft 账号，在 2023 年 12 月完成；LittleSkin 则宣布支持通过 OAuth 获取用以访问 Yggdrasil API 的 Minecraft 令牌。
 
-[SJMCL](https://github.com/SJMC-Dev/SJMCL)（上海交通大学 Minecraft 社开发的启动器）在其账户系统中实现了对 Yggdrasil Connect 提案的 OAuth 登录支持：正确配置了 Blessing Skin Server 与 yggdrasil-connect 插件（配合 Janus）并启用功能的站点（如 MUA 用户中心、SJMC 用户中心），以及 LittleSkin（其生产站采用自有实现，与开源插件方案不同，见 4.1.2），都可以让启动器通过 OAuth 获取角色信息，而无需在启动器框内再输入一次账号密码。
+[SJMCL](https://github.com/SJMC-Dev/SJMCL)（上海交通大学 Minecraft 社开发的启动器）在其账户系统中实现了对 Yggdrasil Connect 提案的 OAuth 登录支持：使用 Blessing Skin Server，启用并正确配置 yggdrasil-connect 插件的站点（如 MUA 用户中心、SJMC 用户中心），以及 LittleSkin，都可以让启动器通过 OAuth 获取角色信息，而无需在启动器框内再输入一次账号密码。
 
-2026年以来，中国科学技术大学 Minecraft 社区开始使用 [element-skin](https://github.com/water2004/element-skin) 作为皮肤站与认证服务，我担任社区服务器管理员，同时也是 element-skin 的协助开发者。element-skin 是完全不同于 Blessing Skin 与其插件生态的皮肤站实现，它实现了标准 OAuth 2.1 / OIDC Provider 与外部身份体系，但**没有（也不太可能去）实现 YggC 自定义 scope 与 selectedProfile claim**，也没有提供「OAuth 换 Minecraft 令牌」的桥接接口（这可能是 bug）。
+2026年以来，中国科学技术大学 Minecraft 社区开始使用 [element-skin](https://github.com/water2004/element-skin) 作为皮肤站与认证服务，我担任社区服务器管理员，同时也是 element-skin 的协助开发者。element-skin 是完全不同于 Blessing Skin 与其插件生态的皮肤站实现，它实现了标准 OAuth 2.1 / OIDC Provider 与外部身份体系，但**没有（也不太可能去）实现 YggC 自定义 scope 与 selectedProfile claim**，也没有提供「OAuth 换 Minecraft 令牌」的桥接接口。
 
 **如果我的皮肤站想用 OAuth 登录替代传统密码登录，需要做哪些事？代价是什么？**
 
-深入调研后发现，这一方向的现状远比「实现一个 OAuth 登录」复杂：它涉及一个被否决的协议提案、多个自研实现、以及启动器生态的跟进意愿问题。本文按调研顺序记录这一过程。
+这一方向的现状远比「实现一个 OAuth 登录」复杂：它涉及一个被否决的协议提案、多个自研实现、以及启动器生态的跟进意愿问题。本文按调研顺序记录这一过程。
 
 ## 2. 相关工作与背景
 
 ### 2.1 Yggdrasil 外置登录与 authlib-injector
 
-authlib-injector 为 Minecraft 提供了外置登录能力，其 [服务端技术规范](https://yushijinhun.github.io/authlib-injector/zh/Yggdrasil-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83.html) 定义了 Yggdrasil API 的完整行为：登录（`POST /authserver/authenticate`）、刷新（`POST /authserver/refresh`）、验证、进服（`POST /sessionserver/session/minecraft/join` 与 `GET /sessionserver/session/minecraft/hasJoined`）、角色查询与材质上传。
+authlib-injector 为 Minecraft 提供了外置登录能力。[Yggdrasil 服务端技术规范](https://yushijinhun.github.io/authlib-injector/zh/Yggdrasil-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83.html) 定义了 Yggdrasil API 的完整行为：登录（`POST /authserver/authenticate`）、刷新（`POST /authserver/refresh`）、验证、进服（`POST /sessionserver/session/minecraft/join` 与 `GET /sessionserver/session/minecraft/hasJoined`）、角色查询与材质上传。
 
-该规范中的 meta 功能选项（`feature.*`）包括：
+在调研时，该规范中的 meta 功能选项（`feature.*`）包括：
 
 - **`feature.non_email_login`**：是否支持使用邮箱之外的凭证登录（如角色名）；
 - **`feature.legacy_skin_api`**：是否支持旧式皮肤 API；
@@ -54,7 +54,9 @@ authlib-injector 为 Minecraft 提供了外置登录能力，其 [服务端技�
 - **`feature.enable_profile_key`**：是否支持消息签名密钥对；
 - **`feature.username_check`**：是否启用用户名验证。
 
-**这些选项中没有包含任何 OAuth 相关内容**。传统登录方式的痛点在于：启动器需要直接收集用户的账号密码并明文发送（`authenticate` 请求体），登录流程没有为二步验证留下设计空间，且各启动器对登录错误的展示与处理方式不一。
+**这些选项中没有包含任何 OAuth 相关内容**。
+
+在传统登录方式下，启动器需要直接收集用户的账号密码并发送（`authenticate` 请求体），登录流程没有为二步验证留下设计空间，且各启动器对登录错误的展示与处理方式不一。
 
 ### 2.2 Yggdrasil Connect 提案（YggC）
 
@@ -76,7 +78,9 @@ authlib-injector 为 Minecraft 提供了外置登录能力，其 [服务端技�
 2. **启动器跟进意愿**：主流启动器普遍未跟进，讨论中即有启动器作者明确表示无暇实现；
 3. **规范复杂度**：草案被指重复了 OIDC 已有内容，应聚焦于对 OIDC 的扩展部分。
 
-最终该提案被标记为 `proposal: rejected` 并锁帖。**提案被拒不等于技术路线全错，但确实意味着这个方向在可见的未来没有统一标准。**
+最终该提案被标记为 `proposal: rejected` 并锁帖。
+
+**提案被拒不等于技术路线全错，但确实意味着这个方向在可见的未来没有统一标准。**
 
 ### 2.3 相关皮肤站项目
 
@@ -86,13 +90,13 @@ authlib-injector 为 Minecraft 提供了外置登录能力，其 [服务端技�
 |---|---|---|---|
 | [Blessing Skin Server](https://github.com/bs-community/blessing-skin-server) | PHP (Laravel) | 依赖插件 | 半停滞 |
 | [yggdrasil-api 插件](https://github.com/bs-community/blessing-skin-plugins/tree/master/plugins/yggdrasil-api) | PHP | 仅密码登录 | - |
-| [yggdrasil-connect 插件](https://github.com/bs-community/blessing-skin-plugins/tree/master/plugins/yggdrasil-connect) | PHP | YggC（配合 Janus） | 由 LittleSkin 开发，仓库托管于 bs-community |
+| [yggdrasil-connect 插件](https://github.com/bs-community/blessing-skin-plugins/tree/master/plugins/yggdrasil-connect) | PHP | YggC（配合 Janus） | LittleSkin 开发（Copyright © LittleSkin，MIT），仓库托管于 bs-community |
 | [Janus](https://github.com/bs-community/janus) | NestJS | YggC OIDC 服务端 | - |
 | [element-skin](https://github.com/water2004/element-skin) | Go + Vue | 标准 OAuth 2.1/OIDC + 外部身份 | 活跃（v2 开发中） |
 | [drasl](https://github.com/drasl-project/drasl) | Go | OIDC 登录皮肤站（非游戏令牌） | 活跃 |
 | [LittleSkin](https://littleskin.cn) | 未公开（站点） | meta 声明 OAuth 端点（实现与开源插件不同，见 4.1.2） | 运营中 |
 
-需要说明：**LittleSkin 与 bs-community（Blessing Skin 的 GitHub 组织）是两个不同的组织**。yggdrasil-connect 插件与 Janus 的仓库均托管在 bs-community 下，但前者 `package.json` 的 `author` 声明为 LittleSkin——LittleSkin 是运营 littleskin.cn 的独立组织，其开源产出出现在 bs-community 仓库中不代表两者是一体的。
+**LittleSkin 与 bs-community（Blessing Skin 的 GitHub 组织）是两个不同的组织**。yggdrasil-connect 插件与 Janus 的仓库均托管在 bs-community 下，但前者 `package.json` 的 `author` 声明为 LittleSkin，其 [README](https://github.com/bs-community/blessing-skin-plugins/blob/master/plugins/yggdrasil-connect/README.md) 亦明确标注 `Copyright (c) 2025-present LittleSkin. All rights reserved. Open source under the MIT license.`，并附带有个人色彩的免责声明——「代码和人有一个能跑就行……如果你看着哪里的代码不爽，欢迎直接重构并 PR」。由此可以确认 LittleSkin 是运营 littleskin.cn 的独立组织，其开源产出出现在 bs-community 仓库中不代表两者是一体的。
 
 关于 Blessing Skin Server 的维护状态，维护者 tnqzh123 在 [issue #674](https://github.com/bs-community/blessing-skin-server/issues/674)（2026-01）中明确表示「目前是处于一个没人维护的状态，有兴趣的话可以帮忙写，直接 fork 然后开新 PR 就行」；dev 分支虽已升级 Laravel 10，但维护者表示「不想把半成品当成稳定版发布」。
 
@@ -146,7 +150,7 @@ pub static CLIENT_IDS: [(&str, &str); 6] = [
 ];
 ```
 
-其中 `skin.mualliance.ltd` 是 MUA 联合皮肤站，可见 SJMCL 与 MUA 生态有直接合作（client ID 列表维护在 [SJMCL-client-ids](https://github.com/SJMC-Dev/SJMCL-client-ids) 仓库）。
+其中 `skin.mualliance.ltd` 是 MUA 联合皮肤站，SJMCL（乃至上海交通大学 Minecraft 社）与 MUA 生态有直接合作。client ID 列表维护在 [SJMCL-client-ids](https://github.com/SJMC-Dev/SJMCL-client-ids) 仓库。
 
 ### 3.2 设备码流与令牌解析
 
@@ -171,7 +175,7 @@ let selected_profile = token_data.claims["selectedProfile"];  // ← 必须存�
 
 拿到 `selectedProfile` 后，SJMCL 会将其解析为 Minecraft 角色（UUID + 名称 + 材质属性），若角色属性缺失则通过 `GET {auth_server_url}/sessionserver/session/minecraft/profile/{uuid}` 补全，最后将 OAuth 令牌（access token、refresh token）与角色信息一起保存为启动器账户。后续刷新走 OAuth `refresh_token` 流程，进服走标准 Yggdrasil 会话接口。
 
-**关键结论**：SJMCL 客户端对皮肤站的要求可以归纳为三个字段：
+SJMCL 客户端对皮肤站的要求可以归纳为三个字段：
 
 | # | 字段 | 位置 |
 |---|---|---|
@@ -181,9 +185,9 @@ let selected_profile = token_data.claims["selectedProfile"];  // ← 必须存�
 
 ## 4. 各项目的实际实现
 
-### 4.1 yggdrasil-connect 插件与 Janus：YggC 的开源实现
+### 4.1 yggdrasil-connect 与 Janus
 
-需要先说明：**本文所描述的「YggC 落地」均指开源仓库 `bs-community/blessing-skin-plugins` 中的 `yggdrasil-connect` 插件与 `bs-community/janus` 项目**。这两个仓库托管于 **bs-community**（Blessing Skin 的 GitHub 组织）下；其中 yggdrasil-connect 插件由 **LittleSkin**（运营 littleskin.cn 的独立组织）开发，其 `package.json` 的 `author` 即声明为 LittleSkin。**LittleSkin 与 bs-community 是两个不同的组织**——前者的开源产出出现在后者的仓库中，不代表两者是一体的；相应地，LittleSkin 生产站（littleskin.cn）的实现也不应与该开源方案直接画等号（见 4.1.2 节的 meta 对比）。下文内容基于开源代码与文档。
+**本文所描述的「YggC 落地」均指开源仓库 `bs-community/blessing-skin-plugins` 中的 `yggdrasil-connect` 插件与 `bs-community/janus` 项目**。这两个仓库托管于 **bs-community**（Blessing Skin 的 GitHub 组织）下；其中 yggdrasil-connect 插件由 **LittleSkin**（运营 littleskin.cn 的独立组织）开发，其 `package.json` 的 `author` 即声明为 LittleSkin，README 亦标注 `Copyright (c) 2025-present LittleSkin`（MIT 协议）并附有免责声明。下文内容基于开源代码与文档。
 
 `yggdrasil-connect` 插件（重构自原版 yggdrasil-api 插件）在代码层面实现了 YggC 草案的完整内容。插件源码（`plugins/yggdrasil-connect`）确认了以下事实：
 
@@ -261,7 +265,7 @@ POST https://littleskin.cn/api/yggdrasil/authserver/oauth
 
 ### 4.2 element-skin：标准 OAuth 2.1 路线
 
-element-skin 的实现是完全不同的哲学：
+element-skin 对皮肤站系统的实现完全不同：
 
 - 实现了**标准 OAuth 2.1 / OIDC Provider**（`/oauth/device/code`、`/oauth/token` 等端点，支持 Authorization Code + PKCE、Device Code、Client Credentials、Refresh Token）；
 - 实现了**外部身份体系**（OIDC 登录，管理员可配置任意 OIDC provider，含 PKCE/nonce/JWKS 校验）；
@@ -298,7 +302,7 @@ drasl 是 Go 实现的轻量皮肤站。调研其源码后发现，它**实现�
 
 ### 5.1 背景
 
-我为 [Minecraft 高校联盟（MUA）](https://mualliance.cn/) 的文档站贡献过一篇 [Docker 部署皮肤站（Blessing Skin + Janus）](https://docs.mualliance.cn/zh/dev/skin-docker) 教程。需要说明的是：**我当前只是 MUA 联合皮肤站的普通用户**，并未参与其维护工作（虽然我具有部门干事身份）；部署教程的完整踩坑过程是我的第一手经验。
+我为 [Minecraft 高校联盟（MUA）](https://mualliance.cn/) 的文档站贡献过一篇 [Docker 部署皮肤站（Blessing Skin + Janus）](https://docs.mualliance.cn/zh/dev/skin-docker) 教程。需要说明的是：虽然我具有部门干事身份，但是**我当前只是 MUA 联合皮肤站的普通用户**，并未参与其维护工作；部署教程的完整踩坑过程是我的第一手经验。
 
 USTC Minecraft 社区曾基于该教程实际部署过整套方案。
 
@@ -350,7 +354,7 @@ USTC Minecraft 社区曾基于该教程实际部署过整套方案。
 
 **代码质量问题**。即便绕开 YggC，Blessing Skin 自身的代码问题也不少。第三方部署教程（[部署 Minecraft 皮肤站实现外置登录](https://gbwater.icu/post/100)，GBwater，2025-11）记录了常规部署（不含 Janus）中遇到的问题：官方不提供 Docker 镜像，需要自建镜像并处理国内网络换源；源码中写死绝对路径，导致子目录部署必须依赖 nginx `sub_filter` 对 HTML/JS 做暴力替换（`/meta.js`、`/lang/` 等资源路径），还要手动关闭资源文件地址的自动判断——教程作者的原话是「作者到底写了多少 bug」。这类问题与 YggC 无关，意味着即使作为普通皮肤站，其日常体验也低于对现代应用的预期。
 
-**新应用设计风格与社区惯性**。element-skin 是全新设计的实现（Go + Vue、API 干净、配置简单），功能（材质管理、外部身份）已覆盖社区需求且持续更新，社区成员早已习惯其工作流；Blessing Skin 则是 PHP + 插件生态的旧式架构，迁移意味着回到更重的维护模式。新应用的设计风格与社区既有惯性，都指向「留在 element-skin」。
+**新应用设计风格与社区惯性**。element-skin 是全新设计的实现（Go + Vue、API 干净、配置简单），功能（材质管理、外部身份）已覆盖社区需求且持续更新，社区成员已习惯其工作流；Blessing Skin 则是 PHP + 插件生态的旧式架构，迁移意味着回到更重的维护模式。新应用的设计风格与社区既有惯性，都指向「留在 element-skin」。
 
 **停滞的社区维护**。Blessing Skin 处于事实上的无人维护状态（[issue #674](https://github.com/bs-community/blessing-skin-server/issues/674)，维护者明确「没人维护」），稳定版依赖 PHP 8.1（2025-12-31 EOL），dev 分支升级 Laravel 10 后无正式版。一个当前可用但无人维护、运行时已 EOL 的软件，作为长期基础设施存在明显风险；相比之下 element-skin 保持活跃更新。
 
@@ -358,7 +362,7 @@ USTC Minecraft 社区曾基于该教程实际部署过整套方案。
 
 这是一个值得玩味的结果：**一套被部署并验证成功的 YggC 方案，最终因为「维护成本 > 用户价值」而被放弃——而这里的「维护成本」不只是 YggC 特有的部署复杂度，还包括 Blessing Skin 本身的代码质量、设计风格与停滞的维护状态**。
 
-> 一个戏剧性的注脚：USTCMC 有一个从 2020 年运行至今的 Blessing Skin 站点——它的访问是公开的，任何人都可以注册并使用它的认证服务。
+> USTCMC 有一个从 2020 年运行至今的 Blessing Skin 站点。它的访问是公开的，任何人都可以注册并使用它的认证服务。
 
 ## 6. 痛点分析
 
@@ -378,9 +382,9 @@ USTC Minecraft 社区曾基于该教程实际部署过整套方案。
 
 OAuth 桥接在生态层面的痛点如下：
 
-- **无统一标准**：YggC 提案被拒后，各站自研：LittleSkin 自建实现（meta 证实但内部未公开）、element 标准 OAuth、drasl OIDC 登录，互不兼容；
-- **启动器跟进不一**：主流启动器普遍未跟进第三方 OAuth（YggC 讨论中即有启动器作者明确表示无暇跟进）；SJMCL 是少数实现 YggC 客户端的启动器；
-- **皮肤站实现成本**：完整 YggC 需要外挂 OIDC 服务端（Janus）或自研桥接接口，配置链长、维护负担重；
+- 无统一标准：YggC 提案被拒后，仅 LittleSkin、MUA 用户中心等站支持 OAuth 换令牌；一些应用仅去实现 OAuth / OIDC 功能，不去兼容 YggC 令牌；
+- 启动器跟进不一：主流启动器普遍未跟进第三方 OAuth（YggC 讨论中即有启动器作者明确表示无暇跟进）；SJMCL 是少数实现 YggC 客户端的启动器；
+- 皮肤站实现成本：完整 YggC 需要外挂 OIDC 服务端（Janus）或自研桥接接口，配置链长、维护负担重；
 - **用户价值存疑**：多数玩家对第三方登录无感知，密码登录「能用」；OAuth 解决的「密码泄露/2FA」问题在社区站场景并非刚需。
 
 ### 6.3 部署层
