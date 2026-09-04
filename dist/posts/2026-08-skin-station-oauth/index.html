@@ -1,0 +1,1051 @@
+<!DOCTYPE html><html dir="ltr" lang="en" class="overflow-y-scroll scroll-smooth"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><link rel="canonical" href="https://blog.lylighte.cc/posts/2026-08-skin-station-oauth/"><meta name="generator" content="Astro v7.0.3"><!-- Primary meta --><title>「为什么我弃用了 Blessing Skin 与 Yggdrasil Connect」 | LyerNest</title><meta name="title" content="「为什么我弃用了 Blessing Skin 与 Yggdrasil Connect」 | LyerNest"><meta name="description" content="围绕皮肤站能否用 OAuth 替代传统 Yggdrasil 密码登录，对 SJMCL、element-skin、Blessing Skin、LittleSkin、drasl 与 Yggdrasil Connect 提案的调研。"><meta name="author" content="Lylighte"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:site_name" content="LyerNest"><meta property="og:title" content="「为什么我弃用了 Blessing Skin 与 Yggdrasil Connect」 | LyerNest"><meta property="og:description" content="围绕皮肤站能否用 OAuth 替代传统 Yggdrasil 密码登录，对 SJMCL、element-skin、Blessing Skin、LittleSkin、drasl 与 Yggdrasil Connect 提案的调研。"><meta property="og:url" content="https://blog.lylighte.cc/posts/2026-08-skin-station-oauth/"><meta property="og:image" content="https://blog.lylighte.cc/posts/2026-08-skin-station-oauth/index.png"><!-- Twitter / X --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://blog.lylighte.cc/posts/2026-08-skin-station-oauth/"><meta property="twitter:title" content="「为什么我弃用了 Blessing Skin 与 Yggdrasil Connect」 | LyerNest"><meta property="twitter:description" content="围绕皮肤站能否用 OAuth 替代传统 Yggdrasil 密码登录，对 SJMCL、element-skin、Blessing Skin、LittleSkin、drasl 与 Yggdrasil Connect 提案的调研。"><meta property="twitter:image" content="https://blog.lylighte.cc/posts/2026-08-skin-station-oauth/index.png"><!-- RSS autodiscovery --><link rel="alternate" type="application/rss+xml" title="LyerNest" href="https://blog.lylighte.cc/rss.xml/"><!-- Filled at runtime by theme.ts to match the current background colour --><meta name="theme-color" content=""><!-- Extra head content injected by child layouts (e.g. JSON-LD, article meta) --><meta property="og:type" content="article"><meta property="article:published_time" content="2026-08-11T18:02:00.000Z"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"「为什么我弃用了 Blessing Skin 与 Yggdrasil Connect」 | LyerNest","image":"https://blog.lylighte.cc/posts/2026-08-skin-station-oauth/index.png","datePublished":"2026-08-11T18:02:00.000Z","author":[{"@type":"Person","name":"Lylighte","url":"https://www.lylighte.cc"}]}</script><!--
+      Inline FOUC-prevention script: sets data-theme on <html> before
+      the browser paints. Runs synchronously, no defer/async.
+    --><script>
+      (function () {
+        const stored = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const theme = stored ?? (prefersDark ? "dark" : "light");
+        const root = document.firstElementChild;
+        root?.setAttribute("data-theme", theme);
+        root?.classList.toggle("dark", theme === "dark");
+        // Expose value so theme.ts can skip re-detection.
+        window.__theme = { value: theme };
+      })();
+    </script><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.2i1RQzKf.js"></script><link rel="stylesheet" href="/_astro/Footer.CVYjTCvX.css"><style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*),[data-astro-transition-scope]{animation:none!important}}
+</style><style>[data-astro-transition-scope="astro-bztu2lml-1"] { view-transition-name: minecraft; }@layer astro { ::view-transition-old(minecraft) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(minecraft) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(minecraft) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(minecraft) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-bztu2lml-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-bztu2lml-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-bztu2lml-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-bztu2lml-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-bztu2lml-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-bztu2lml-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-bztu2lml-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-bztu2lml-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-bztu2lml-2"] { view-transition-name: oauth; }@layer astro { ::view-transition-old(oauth) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(oauth) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(oauth) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(oauth) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-bztu2lml-2"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-bztu2lml-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-bztu2lml-2"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-bztu2lml-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-bztu2lml-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-bztu2lml-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-bztu2lml-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-bztu2lml-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-bztu2lml-3"] { view-transition-name: yggdrasil; }@layer astro { ::view-transition-old(yggdrasil) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(yggdrasil) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(yggdrasil) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(yggdrasil) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-bztu2lml-3"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-bztu2lml-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-bztu2lml-3"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-bztu2lml-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-bztu2lml-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-bztu2lml-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-bztu2lml-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-bztu2lml-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-bztu2lml-4"] { view-transition-name: skinstation; }@layer astro { ::view-transition-old(skinstation) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(skinstation) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(skinstation) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(skinstation) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-bztu2lml-4"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-bztu2lml-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-bztu2lml-4"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-bztu2lml-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-bztu2lml-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-bztu2lml-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-bztu2lml-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-bztu2lml-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head><body class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"><a id="skip-to-content" href="#main-content" class="bg-background text-accent absolute inset-s-16 -top-full z-50 px-3 py-2 backdrop-blur-lg transition-all focus:top-4">Skip to content</a><header class="app-layout flex flex-col items-center justify-between sm:flex-row"><div class="border-border bg-background relative flex w-full items-baseline justify-between border-b py-4 sm:items-center sm:py-6"><a href="/" class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none">LyerNest</a><nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"><button id="menu-btn" class="focus-outline self-end p-2 sm:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="menu-items" data-label-open="Open menu" data-label-close="Close menu"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="hidden" viewBox="0 0 24 24" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" /><path d="M18 6 6 18M6 6l12 12" /></svg><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" viewBox="0 0 24 24" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" /><path d="M4 6h16M7 12h13M10 18h10" /></svg></button><ul id="menu-items" class="[&amp;&gt;li&gt;a]:hover:text-accent mt-4 hidden w-44 grid-cols-2 place-content-center gap-2 sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0 sm:[&amp;&gt;li]:h-8 [&amp;&gt;li&gt;a]:block [&amp;&gt;li&gt;a]:px-4 [&amp;&gt;li&gt;a]:py-3 [&amp;&gt;li&gt;a]:text-center [&amp;&gt;li&gt;a]:font-medium sm:[&amp;&gt;li&gt;a]:px-2 sm:[&amp;&gt;li&gt;a]:py-1"><!-- <li class="col-span-2">
+          <a
+            href={getRelativeLocaleUrl(locale, "posts")}
+            class:list={{ "active-nav": isActive("/posts") }}
+          >
+            {t.nav.posts}
+          </a>
+        </li> --><li class="col-span-2"><a href="/tags/">Tags</a></li><li class="col-span-2"><a href="/about/">About</a></li><li class="col-span-2"><a href="/archives/" title="Archives" aria-label="Archives" class="group inline-flex items-center gap-1 hover:text-accent focus-outline flex size-full justify-center p-3 sm:relative sm:size-8 sm:p-0"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="hidden sm:absolute sm:top-1/2 sm:left-1/2 sm:block sm:size-6 sm:-translate-x-1/2 sm:-translate-y-1/2" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8M10 12h4" /></svg><span class="sm:sr-only">Archives</span></a></li><li class="col-span-1 flex items-center justify-center"><a href="/search/" title="Search" aria-label="Search" class="group inline-flex items-center gap-1 hover:text-accent focus-outline relative size-8"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M3 10a7 7 0 1 0 14 0 7 7 0 1 0-14 0M21 21l-6-6" /></svg><span class="sr-only">Search</span></a></li><li class="col-span-1 flex items-center justify-center"><button id="theme-btn" class="focus-outline hover:[&amp;&gt;svg]:stroke-accent relative size-12 p-4 sm:size-8" title="Toggle theme" aria-label="auto" aria-live="polite"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="absolute top-[50%] left-[50%] translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z" /></svg><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="absolute top-[50%] left-[50%] translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M14.828 14.828a4 4 0 1 0-5.656-5.656 4 4 0 0 0 5.656 5.656M6.343 17.657l-1.414 1.414M6.343 6.343 4.929 4.929M17.657 6.343l1.414-1.414M17.657 17.657l1.414 1.414M4 12H2M12 4V2M20 12h2M12 20v2" /></svg></button></li></ul></nav></div></header><script type="module">function e(){let e=document.querySelector(`#menu-btn`),t=document.querySelector(`#menu-items`),n=document.querySelector(`#menu-icon`),r=document.querySelector(`#close-icon`);if(!e||!t||!n||!r)return;let i=e.dataset.labelOpen??`Open menu`,a=e.dataset.labelClose??`Close menu`;e.addEventListener(`click`,()=>{let o=e.getAttribute(`aria-expanded`)===`true`;e.setAttribute(`aria-expanded`,o?`false`:`true`),e.setAttribute(`aria-label`,o?i:a),t.classList.toggle(`hidden`),t.classList.toggle(`grid`),n.classList.toggle(`hidden`),r.classList.toggle(`hidden`)})}function t(){let e=document.getElementById(`skip-to-content`);e&&e.addEventListener(`click`,e=>{if(e.defaultPrevented||e.metaKey||e.ctrlKey||e.shiftKey||e.button!==0)return;e.preventDefault();let t=document.getElementById(`main-content`);t&&(t.setAttribute(`tabindex`,`-1`),t.addEventListener(`blur`,()=>t.removeAttribute(`tabindex`),{once:!0}),t.focus(),t.scrollIntoView({behavior:`smooth`}))})}e(),document.addEventListener(`astro:after-swap`,e),t(),document.addEventListener(`astro:after-swap`,t);</script><div class="app-layout flex items-center justify-start"><a id="back-button" href="/" class="group inline-flex items-center gap-1 hover:text-accent focus-outline hover:text-foreground/75 -ms-2 mt-8 mb-2"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 rtl:rotate-180" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="m15 6-6 6 6 6" /></svg><span>Go back</span></a></div><script type="module">function e(){let e=document.querySelector(`#back-button`),t=sessionStorage.getItem(`backUrl`);t&&e&&(e.href=t)}document.addEventListener(`astro:page-load`,e),e();</script><main id="main-content" class="app-layout" data-pagefind-body><h1 style="view-transition-name:p-2026-08-skin-station-oauth" class="text-accent inline-block text-2xl font-bold sm:text-3xl">「为什么我弃用了 Blessing Skin 与 Yggdrasil Connect」</h1><div class="my-2 flex items-center gap-2"><div class="text-muted-foreground flex items-center gap-x-2"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 min-w-5.5" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM16 3v4M8 3v4M4 11h16M7 14h.013M10.01 14h.005M13.01 14h.005M16.015 14h.005M13.015 17h.005M7.01 17h.005M10.01 17h.005" /></svg><time class="text-sm sm:text-base" datetime="2026-08-11T18:02:00.000Z">12 Aug, 2026</time></div><span aria-hidden="true" class="text-muted-foreground max-sm:hidden hidden">|</span></div><article id="article" class="mt-8 w-full app-prose max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"><blockquote><p>摘要：</p><p>我曾在 USTCMC 社区亲手部署了 Blessing + YggC + Janus 方案，两个月后却选择全站弃用、继续推进 element-skin。</p><p>本文展开调研：通过阅读 SJMCL 的 OAuth 客户端实现、Yggdrasil Connect（YggC）提案的讨论过程、Blessing Skin 插件生态中的开源实现（yggdrasil-connect 插件与 Janus）、LittleSkin 手册记载的专属 API 设计，以及 element-skin、drasl 的标准 OAuth/OIDC 实现源码，并结合这次部署后弃用的第一手实践，本文梳理了该方向在协议层、生态层与部署层的痛点，并给出了个人结论：</p><p>在缺乏统一标准、启动器跟进不足的情况下，传统密码登录仍是多数皮肤站的合理默认选择，OAuth 桥接的价值仅在特定身份源场景中体现。</p></blockquote>
+<blockquote><p>关键词：Minecraft；皮肤站；Yggdrasil；OAuth；OpenID Connect；外置登录</p></blockquote>
+<blockquote><p>调研说明：本文的调研与事实核查基于 2026 年 8 月的实际情况（源码快照、文档版本与在线服务状态均以该时间点为准），文中涉及的项目状态可能在本文发布后发生变化。</p><p>声明：本文由 DeepSeek V4 辅助生成。作者提供了调研方向、资料与个人经验，模型负责整理与行文；文中的事实性内容均基于作者提供的资料与公开文档，作者已对全文进行核对。文中的观点与结论代表作者个人，不代表作者所属任何组织。如内容有事实性错误或不当表述，欢迎在该博客<a href="https://github.com/Lylighte/astro-paper/tree/personal">仓库</a>提交 issue。</p></blockquote>
+<hr>
+<h2 id="1-引言">1. 引言</h2>
+<p>authlib-injector 外置登录利用了 Minecraft 自带的 Yggdrasil 鉴权认证系统，是多人游戏中用户身份认证的主流手段之一。</p>
+<p>传统 Yggdrasil API 的登录接口需要启动器直接收集账号密码，且几乎没有为二步验证留出设计空间；在 HTTP 请求中，这些敏感内容会被明文发送。Mojang 选择将账号体系迁移至 Microsoft 账号，在 2023 年 12 月完成；LittleSkin 则宣布支持通过 OAuth 获取用以访问 Yggdrasil API 的 Minecraft 令牌。</p>
+<p><a href="https://github.com/SJMC-Dev/SJMCL">SJMCL</a>（上海交通大学 Minecraft 社开发的启动器）在其账户系统中实现了对 Yggdrasil Connect 提案的 OAuth 登录支持：使用 Blessing Skin Server，启用并正确配置 yggdrasil-connect 插件的站点（如 MUA 用户中心、SJMC 用户中心），以及 LittleSkin，都可以让启动器通过 OAuth 获取角色信息，而无需在启动器框内再输入一次账号密码。</p>
+<p>2026年以来，中国科学技术大学 Minecraft 社区开始使用 <a href="https://github.com/water2004/element-skin">element-skin</a> 作为皮肤站与认证服务，我担任社区服务器管理员，同时也是 element-skin 的协助开发者。element-skin 是完全不同于 Blessing Skin 与其插件生态的皮肤站实现，它实现了标准 OAuth 2.1 / OIDC Provider 与外部身份体系，但<strong>没有（也不太可能去）实现 YggC 自定义 scope 与 selectedProfile claim</strong>，也没有提供「OAuth 换 Minecraft 令牌」的桥接接口。</p>
+<p><strong>如果我的皮肤站想用 OAuth 登录替代传统密码登录，需要做哪些事？代价是什么？</strong></p>
+<p>这一方向的现状远比「实现一个 OAuth 登录」复杂：它涉及一个被否决的协议提案、多个自研实现、以及启动器生态的跟进意愿问题。本文按调研顺序记录这一过程。</p>
+<h2 id="2-相关工作与背景">2. 相关工作与背景</h2>
+<h3 id="21-yggdrasil-外置登录与-authlib-injector">2.1 Yggdrasil 外置登录与 authlib-injector</h3>
+<p>authlib-injector 为 Minecraft 提供了外置登录能力。<a href="https://yushijinhun.github.io/authlib-injector/zh/Yggdrasil-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83.html">Yggdrasil 服务端技术规范</a> 定义了 Yggdrasil API 的完整行为：登录（<code>POST /authserver/authenticate</code>）、刷新（<code>POST /authserver/refresh</code>）、验证、进服（<code>POST /sessionserver/session/minecraft/join</code> 与 <code>GET /sessionserver/session/minecraft/hasJoined</code>）、角色查询与材质上传。</p>
+<p>在调研时，该规范中的 meta 功能选项（<code>feature.*</code>）包括：</p>
+<ul>
+<li><strong><code>feature.non_email_login</code></strong>：是否支持使用邮箱之外的凭证登录（如角色名）；</li>
+<li><strong><code>feature.legacy_skin_api</code></strong>：是否支持旧式皮肤 API；</li>
+<li><strong><code>feature.no_mojang_namespace</code></strong>：是否禁用 Mojang 命名空间；</li>
+<li><strong><code>feature.enable_mojang_anti_features</code></strong>：是否开启 Minecraft anti-features；</li>
+<li><strong><code>feature.enable_profile_key</code></strong>：是否支持消息签名密钥对；</li>
+<li><strong><code>feature.username_check</code></strong>：是否启用用户名验证。</li>
+</ul>
+<p><strong>这些选项中没有包含任何 OAuth 相关内容</strong>。</p>
+<p>在传统登录方式下，启动器需要直接收集用户的账号密码并发送（<code>authenticate</code> 请求体），登录流程没有为二步验证留下设计空间，且各启动器对登录错误的展示与处理方式不一。</p>
+<h3 id="22-yggdrasil-connect-提案yggc">2.2 Yggdrasil Connect 提案（YggC）</h3>
+<p><a href="https://github.com/yushijinhun/authlib-injector/issues/268">Yggdrasil Connect 提案</a>（2025-01-17 由 tnqzh123 提出）旨在基于 OAuth 2.0 + OpenID Connect 取代 Yggdrasil API 的登录部分。</p>
+<p>推测「Connect」一词有两层含义——其一，它描述的是把「外部身份源」与「Yggdrasil 游戏身份」两套身份系统连接起来的动作；其二，它直接借用了 OpenID Connect（OIDC）的构词——OIDC 的名字含义是「把身份认证（OpenID）连接到授权层（OAuth 2.0）」，YggC 即「通过 OAuth 2.0 / OIDC 连接起来的 Yggdrasil」。</p>
+<p>其要点包括：</p>
+<ul>
+<li><strong>服务发现</strong>：Yggdrasil meta 增加 <code>feature.openid_configuration_url</code> 指向 OpenID Provider 元数据；</li>
+<li><strong>应用注册</strong>：主动注册、动态注册（DCR）、公用应用（<code>shared_client_id</code>）三种方式；</li>
+<li><strong>自定义 scope</strong>：<code>Yggdrasil.PlayerProfiles.Select</code> / <code>Read</code>、<code>Yggdrasil.Server.Join</code>；</li>
+<li><strong>id_token 扩展</strong>：<code>selectedProfile</code>、<code>availableProfiles</code> claim；</li>
+<li><strong>授权流</strong>：授权码流、设备码流（RFC 8628）。</li>
+</ul>
+<p>讨论过程（2025-01-17 至 2025-01-25）焦点集中在三个问题上：</p>
+<ol>
+<li><strong>应用注册方式</strong>：逐站注册 client 被认为是互操作性的灾难，动态注册（DCR）与公用应用两种路线争论激烈；</li>
+<li><strong>启动器跟进意愿</strong>：主流启动器普遍未跟进，讨论中即有启动器作者明确表示无暇实现；</li>
+<li><strong>规范复杂度</strong>：草案被指重复了 OIDC 已有内容，应聚焦于对 OIDC 的扩展部分。</li>
+</ol>
+<p>最终该提案被标记为 <code>proposal: rejected</code> 并锁帖。</p>
+<p><strong>提案被拒不等于技术路线全错，但确实意味着这个方向在可见的未来没有统一标准。</strong></p>
+<h3 id="23-相关皮肤站项目">2.3 相关皮肤站项目</h3>
+<p>调研涉及的皮肤站相关项目如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项目</th><th>技术栈</th><th>OAuth/OIDC 支持</th><th>维护状态</th></tr></thead><tbody><tr><td><a href="https://github.com/bs-community/blessing-skin-server">Blessing Skin Server</a></td><td>PHP (Laravel)</td><td>依赖插件</td><td>半停滞</td></tr><tr><td><a href="https://github.com/bs-community/blessing-skin-plugins/tree/master/plugins/yggdrasil-api">yggdrasil-api 插件</a></td><td>PHP</td><td>仅密码登录</td><td>-</td></tr><tr><td><a href="https://github.com/bs-community/blessing-skin-plugins/tree/master/plugins/yggdrasil-connect">yggdrasil-connect 插件</a></td><td>PHP</td><td>YggC（配合 Janus）</td><td>LittleSkin 开发（Copyright © LittleSkin，MIT），仓库托管于 bs-community</td></tr><tr><td><a href="https://github.com/bs-community/janus">Janus</a></td><td>NestJS</td><td>YggC OIDC 服务端</td><td>-</td></tr><tr><td><a href="https://github.com/water2004/element-skin">element-skin</a></td><td>Go + Vue</td><td>标准 OAuth 2.1/OIDC + 外部身份</td><td>活跃（v2 开发中）</td></tr><tr><td><a href="https://github.com/drasl-project/drasl">drasl</a></td><td>Go</td><td>OIDC 登录皮肤站（非游戏令牌）</td><td>活跃</td></tr><tr><td><a href="https://littleskin.cn">LittleSkin</a></td><td>未公开（站点）</td><td>meta 声明 OAuth 端点（实现与开源插件不同，见 4.1.2）</td><td>运营中</td></tr></tbody></table>
+<p><strong>LittleSkin 与 bs-community（Blessing Skin 的 GitHub 组织）是两个不同的组织</strong>。yggdrasil-connect 插件与 Janus 的仓库均托管在 bs-community 下，但前者 <code>package.json</code> 的 <code>author</code> 声明为 LittleSkin，其 <a href="https://github.com/bs-community/blessing-skin-plugins/blob/master/plugins/yggdrasil-connect/README.md">README</a> 亦明确标注 <code>Copyright (c) 2025-present LittleSkin. All rights reserved. Open source under the MIT license.</code>，并附带有个人色彩的免责声明——「代码和人有一个能跑就行……如果你看着哪里的代码不爽，欢迎直接重构并 PR」。由此可以确认 LittleSkin 是运营 littleskin.cn 的独立组织，其开源产出出现在 bs-community 仓库中不代表两者是一体的。</p>
+<p>关于 Blessing Skin Server 的维护状态，维护者 tnqzh123 在 <a href="https://github.com/bs-community/blessing-skin-server/issues/674">issue #674</a>（2026-01）中明确表示「目前是处于一个没人维护的状态，有兴趣的话可以帮忙写，直接 fork 然后开新 PR 就行」；dev 分支虽已升级 Laravel 10，但维护者表示「不想把半成品当成稳定版发布」。</p>
+<h2 id="3-sjmcl-的-oauth-客户端实现">3. SJMCL 的 OAuth 客户端实现</h2>
+<p>SJMCL 的第三方 OAuth 登录实现在 <a href="https://github.com/SJMC-Dev/SJMCL/tree/main/src-tauri/src/account/helpers/authlib_injector"><code>src-tauri/src/account/helpers/authlib_injector/</code></a>（<code>info.rs</code>、<code>constants.rs</code>、<code>oauth.rs</code>）。其工作方式如下。</p>
+<h3 id="31-服务发现">3.1 服务发现</h3>
+<p>SJMCL 在获取认证服务器信息时，会读取 Yggdrasil meta 中的 <code>feature.openid_configuration_url</code> 字段（<code>info.rs</code>）：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="rust"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">let</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> openid_configuration_url</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> json</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">meta</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">][</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">feature.openid_configuration_url</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">]</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">    .</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">as_str</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">()</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">    .</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">unwrap_or_default</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">()</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">    .</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">to_string</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">if</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> !</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">openid_configuration_url</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">is_empty</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">() {</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    // 1. 先按域名查内置 client ID 表</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    if</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> let</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D6DEEB"> Some</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">domain</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> url</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">domain</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">() {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">        client_id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> get_client_id</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">domain</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">to_string</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">());</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    }</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    // 2. 查不到则请求 OpenID 元数据，读 shared_client_id</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> client_id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">is_none</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">() {</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">        let</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> data</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> client</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">get</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x26;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">openid_configuration_url</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">json</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">()</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">await</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">?</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">        client_id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> data</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">shared_client_id</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">as_str</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">()</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">map</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">|</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">s</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">|</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> s</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">to_string</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">());</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<p>SJMCL 内置了预设认证服务器与 client ID 表（<code>constants.rs</code>）：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="rust"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">pub</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> static</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> PRESET_AUTH_SERVERS</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">:</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> [</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x26;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D6DEEB">str</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">; </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">] </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> [</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">https://skin.mc.sjtu.cn/api/yggdrasil</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">https://skin.mualliance.ltd/api/yggdrasil</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">https://littleskin.cn/api/yggdrasil</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">pub</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> static</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> SCOPE</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">:</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> &#x26;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D6DEEB">str</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">openid offline_access Yggdrasil.PlayerProfiles.Select Yggdrasil.Server.Join</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">pub</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> static</span><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF"> CLIENT_IDS</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">:</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> [(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x26;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D6DEEB">str</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x26;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D6DEEB">str</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">); </span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">6</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">] </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> [</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  (</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">skin.mc.sjtu.cn</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">6</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  (</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">skin.mualliance.ltd</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">27</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  (</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">littleskin.cn</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">1014</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  // supported MUA auth servers (ref: SJMC-Dev/SJMCL-client-ids)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  (</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">skin.jsumc.fun</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">2</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  (</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">skin.mc.taru.xj.cn</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">6</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  (</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">user.suesmc.ltd</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">4</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">),</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">];</span></span></code></pre>
+<p>其中 <code>skin.mualliance.ltd</code> 是 MUA 联合皮肤站，SJMCL（乃至上海交通大学 Minecraft 社）与 MUA 生态有直接合作。client ID 列表维护在 <a href="https://github.com/SJMC-Dev/SJMCL-client-ids">SJMCL-client-ids</a> 仓库。</p>
+<h3 id="32-设备码流与令牌解析">3.2 设备码流与令牌解析</h3>
+<p>SJMCL 使用 RFC 8628 设备授权流完成登录（<code>oauth.rs</code>）：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="rust"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">// 1. 设备授权：向 device_authorization_endpoint 发起请求</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">POST</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">device_authorization_endpoint</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">  form</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">:</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> client_id</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">scope</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">openid offline_access Yggdrasil.PlayerProfiles.Select Yggdrasil.Server.Join</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">// → 返回 device_code, user_code, verification_uri, interval, expires_in</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">// （user_code 会自动写入剪贴板）</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">// 2. 轮询令牌：以 interval 为间隔请求 token_endpoint</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">POST</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">token_endpoint</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">  form</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">:</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> client_id</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">device_code</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">grant_type</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">urn:ietf:params:oauth:grant-type:device_code</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">// 3. 解析 id_token（JWT）</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">let</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> token_data</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> decode</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">::</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">&#x3C;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D6DEEB">Value</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">>(</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">tokens</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">id_token, </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x26;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">decoding_key</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">, </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">&#x26;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">validation</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">//   RS256 签名校验（JWKS 取第一个 key）+ aud 校验（= client_id）</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">let</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> selected_profile</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> token_data</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">claims[</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">selectedProfile</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">];  </span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">// ← 必须存在</span></span></code></pre>
+<p>拿到 <code>selectedProfile</code> 后，SJMCL 会将其解析为 Minecraft 角色（UUID + 名称 + 材质属性），若角色属性缺失则通过 <code>GET {auth_server_url}/sessionserver/session/minecraft/profile/{uuid}</code> 补全，最后将 OAuth 令牌（access token、refresh token）与角色信息一起保存为启动器账户。后续刷新走 OAuth <code>refresh_token</code> 流程，进服走标准 Yggdrasil 会话接口。</p>
+<p>SJMCL 客户端对皮肤站的要求可以归纳为三个字段：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>字段</th><th>位置</th></tr></thead><tbody><tr><td>1</td><td><code>feature.openid_configuration_url</code></td><td>Yggdrasil meta 响应</td></tr><tr><td>2</td><td><code>shared_client_id</code></td><td>OpenID Provider 元数据</td></tr><tr><td>3</td><td><code>selectedProfile</code> claim</td><td>id_token（JWT）</td></tr></tbody></table>
+<h2 id="4-各项目的实际实现">4. 各项目的实际实现</h2>
+<h3 id="41-yggdrasil-connect-与-janus">4.1 yggdrasil-connect 与 Janus</h3>
+<p><strong>本文所描述的「YggC 落地」均指开源仓库 <code>bs-community/blessing-skin-plugins</code> 中的 <code>yggdrasil-connect</code> 插件与 <code>bs-community/janus</code> 项目</strong>。这两个仓库托管于 <strong>bs-community</strong>（Blessing Skin 的 GitHub 组织）下；其中 yggdrasil-connect 插件由 <strong>LittleSkin</strong>（运营 littleskin.cn 的独立组织）开发，其 <code>package.json</code> 的 <code>author</code> 即声明为 LittleSkin，README 亦标注 <code>Copyright (c) 2025-present LittleSkin</code>（MIT 协议）并附有免责声明。下文内容基于开源代码与文档。</p>
+<p><code>yggdrasil-connect</code> 插件（重构自原版 yggdrasil-api 插件）在代码层面实现了 YggC 草案的完整内容。插件源码（<code>plugins/yggdrasil-connect</code>）确认了以下事实：</p>
+<ul>
+<li><strong>Scope 定义</strong>（<code>src/Scope.php</code>）：<code>openid</code>、<code>profile</code>、<code>email</code>、<code>offline_access</code>、<code>Yggdrasil.PlayerProfiles.Read</code>、<code>Yggdrasil.PlayerProfiles.Select</code>、<code>Yggdrasil.Server.Join</code>；</li>
+<li><strong>meta 输出</strong>（<code>src/Controllers/ConfigController.php</code>）：配置了 Janus 地址后，meta 会输出：</li>
+</ul>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="php"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">!</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">empty</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#D6DEEB">$</span><span style="--shiki-light:#6F42C1;--shiki-dark:#BEC5D4">yggc_server</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#BEC5D4">    $result</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">meta</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">][</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">feature.openid_configuration_url</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">] </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#BEC5D4">$yggc_server</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">/.well-known/openid-configuration</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<ul>
+<li><strong>令牌实现</strong>：使用 Laravel Passport 个人访问令牌（PAT）作为访问令牌，通过在 JWT payload 中添加角色 UUID（<code>withClaim('selectedProfile', ...)</code>）并重新签名实现访问令牌与角色的绑定；外挂的 Janus（OIDC 服务端）则负责签发包含 <code>selectedProfile</code> 的 id_token，并提供 <code>shared_client_id</code> 发现字段；</li>
+<li><strong>依赖 Janus</strong>：需要外挂的 OpenID Connect 服务端（Janus 使用 NestJS + node-oidc-provider 实现，与 Blessing Skin 共享数据库），插件配置页填写 Janus 的 OpenID 提供者标识符后启用。</li>
+</ul>
+<p>Janus 的源码（<code>oidc-provider.service.ts</code>）确认了 id_token 与 access token 的 claim 机制：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="ts"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">// claims 映射：Select scope → selectedProfile claim</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">claims</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  [</span><span style="--shiki-light:#1976D2;--shiki-dark:#D6DEEB">YggCScopes</span><span style="--shiki-light:#24292EFF;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">PROFILE_SELECT</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">]: [</span><span style="--shiki-light:#1976D2;--shiki-dark:#D6DEEB">YggCClaims</span><span style="--shiki-light:#24292EFF;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">SELECTED_PROFILE</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">   // "Yggdrasil.PlayerProfiles.Select" → "selectedProfile"</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  [</span><span style="--shiki-light:#1976D2;--shiki-dark:#D6DEEB">YggCScopes</span><span style="--shiki-light:#24292EFF;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">PROFILE_READ</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">]: [</span><span style="--shiki-light:#1976D2;--shiki-dark:#D6DEEB">YggCClaims</span><span style="--shiki-light:#24292EFF;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">AVAILABLE_PROFILES</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">]</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">   // "Yggdrasil.PlayerProfiles.Read" → "availableProfiles"</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">// findAccount 中：申请 Select scope 时从 codeIdToUUID 表查出角色注入</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> (</span><span style="--shiki-light:#1976D2;--shiki-dark:#D6DEEB">scopes</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">?.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">includes</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#D6DEEB">YggCScopes</span><span style="--shiki-light:#24292EFF;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF">PROFILE_SELECT</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">)) {</span></span>
+<span class="line"><span style="--shiki-light:#1976D2;--shiki-dark:#D6DEEB">  userInfo</span><span style="--shiki-light:#24292EFF;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#BAEBE2">selectedProfile</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> { id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#1976D2;--shiki-dark:#D6DEEB"> uuid</span><span style="--shiki-light:#24292EFF;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#BAEBE2">uuid</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> name</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#1976D2;--shiki-dark:#D6DEEB"> uuid</span><span style="--shiki-light:#24292EFF;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#BAEBE2">player</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">!</span><span style="--shiki-light:#24292EFF;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#BAEBE2">name</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> };</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">// discovery 输出 shared_client_id</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">discovery</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  shared_client_id</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#1976D2;--shiki-dark:#D6DEEB"> sharedClientId</span><span style="--shiki-light:#24292EFF;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">?.</span><span style="--shiki-light:#1976D2;--shiki-dark:#7FDBCA">length</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> ?</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> sharedClientId </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">:</span><span style="--shiki-light:#1976D2;--shiki-dark:#82AAFF"> undefined</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span></span></code></pre>
+<p>此外，Janus 的 access token 也是 JWT 格式（<code>accessTokenFormat: 'jwt'</code>），并通过 <code>extraTokenClaims</code> 把 <code>selectedProfile.id</code> 写入 access token 的 JWT payload——这与插件侧 <code>AccessToken.php</code> 从 <code>jwtDecoded</code> 读取 <code>selectedProfile</code> 的逻辑对应（两者是同一套令牌体系）。设备码流（<code>deviceFlow</code>）、refresh token 轮换（<code>rotateRefreshToken: true</code>）也已启用。</p>
+<h4 id="411-手册记载的-littleskin-专属-api-设计">4.1.1 手册记载的 LittleSkin 专属 API 设计</h4>
+<p>另外需要单独说明：LittleSkin 官方手册（<a href="https://github.com/LittleSkinChina/manual-ng">manual-ng</a>）中记录了两个「获取 Minecraft 令牌」相关的专属 API 设计（手册描述的是 LittleSkin 的 API 设计，其是否在线可用未经验证，与 4.1 节的开源实现是两个独立的信息来源）：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="http"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">GET</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  https://littleskin.cn/api/yggdrasil/sessionserver/session/minecraft/profile</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">POST</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> https://littleskin.cn/api/yggdrasil/authserver/oauth</span></span></code></pre>
+<p>其中「获取 Minecraft 令牌」API 的响应与 Yggdrasil 登录 API 一致：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="json"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">{</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">  "accessToken"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#C789D6">{{access_token}}</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">  "clientToken"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#C789D6">{{client_token}}</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">  "availableProfiles"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> [{ </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">"id"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#C789D6">{{uuid}}</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> "name"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#C789D6">{{name}}</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> }]</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">  "selectedProfile"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> { </span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">"id"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#C789D6">{{uuid}}</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> "name"</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> "</span><span style="--shiki-light:#22863A;--shiki-dark:#C789D6">{{name}}</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<p>也就是说，在 LittleSkin 手册的设计中，<strong>没有完全依赖 id_token 携带 selectedProfile 的路线</strong>，而是提供了「OAuth 换 Minecraft 令牌」的专属 API——这是对 YggC 草案的实践修正。</p>
+<h4 id="412-站点-meta-对比littleskin-与-mua-联合皮肤站">4.1.2 站点 meta 对比：LittleSkin 与 MUA 联合皮肤站</h4>
+<p>2026-08 抓取的 Yggdrasil 元数据（<code>GET /api/yggdrasil</code> 返回的 meta）可以对比两个站点的实际部署：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>字段</th><th>LittleSkin（littleskin.cn）</th><th>MUA 联合皮肤站（skin.mualliance.ltd）</th></tr></thead><tbody><tr><td><code>implementationName</code></td><td><code>"Yggdrasil Connect"</code></td><td><code>"Yggdrasil Connect for Blessing Skin by LittleSkin"</code></td></tr><tr><td><code>implementationVersion</code></td><td><code>0.0.8</code></td><td><code>6.1.0-0.3.2</code></td></tr><tr><td><code>feature.openid_configuration_url</code></td><td><code>https://open.littleskin.cn/.well-known/openid-configuration</code>（独立子域）</td><td><code>https://skin.mualliance.ltd/open/.well-known/openid-configuration</code>（子路径）</td></tr><tr><td>其他 feature</td><td>含 <code>enable_profile_key</code>、<code>enable_mojang_anti_features</code></td><td>仅 <code>non_email_login</code></td></tr></tbody></table>
+<p>由此可以确认：</p>
+<ul>
+<li><strong>MUA 联合皮肤站运行的是 Blessing Skin + yggdrasil-connect 插件 + Janus 的完整开源方案</strong>（<code>implementationName</code> 与插件仓库的 <code>"Yggdrasil Connect for Blessing Skin by LittleSkin"</code> 完全一致）；</li>
+<li><strong>LittleSkin 生产站的 <code>implementationName</code> 是 <code>"Yggdrasil Connect"</code>（无 “for Blessing Skin” 后缀）</strong>，且 OIDC 服务在独立子域 <code>open.littleskin.cn</code>——其部署形态与开源插件 + Janus 方案<strong>不完全相同</strong>，可能是 LittleSkin 自行维护的另一套实现（或对开源方案做了改造）。因此，<strong>开源插件/Janus 方案不能直接等同于 LittleSkin 生产站的实际实现</strong>。</li>
+</ul>
+<h3 id="42-element-skin标准-oauth-21-路线">4.2 element-skin：标准 OAuth 2.1 路线</h3>
+<p>element-skin 对皮肤站系统的实现完全不同：</p>
+<ul>
+<li>实现了<strong>标准 OAuth 2.1 / OIDC Provider</strong>（<code>/oauth/device/code</code>、<code>/oauth/token</code> 等端点，支持 Authorization Code + PKCE、Device Code、Client Credentials、Refresh Token）；</li>
+<li>实现了<strong>外部身份体系</strong>（OIDC 登录，管理员可配置任意 OIDC provider，含 PKCE/nonce/JWKS 校验）；</li>
+<li><strong>未实现</strong> YggC 自定义 scope 与 <code>selectedProfile</code> claim（<code>scopes_supported</code> 来自站点权限码）；</li>
+<li>Yggdrasil 会话（进服验证）与站点 OAuth <strong>严格分离</strong>，两者间无桥接接口。</li>
+</ul>
+<p>element-skin 的文档明确：OAuth 协议端点与 Yggdrasil/Mojang 兼容端点不放入 <code>/v2</code> 站点 API；<code>/v2/minecraft/*</code> 是新的站点能力 API，不替代 Yggdrasil 协议。</p>
+<h3 id="43-drasloidc-登录皮肤站但无游戏令牌桥接">4.3 drasl：OIDC 登录皮肤站，但无游戏令牌桥接</h3>
+<p>drasl 是 Go 实现的轻量皮肤站。调研其源码后发现，它<strong>实现了 OIDC 外部身份</strong>（使用 <code>zitadel/oidc</code> 库），但<strong>没有实现 YggC 类「OAuth 获取游戏令牌」</strong>。具体事实如下：</p>
+<ul>
+<li><strong>OIDC 登录皮肤站</strong>（<code>front.go</code>、<code>auth.go</code>）：支持通过外部 OIDC provider 注册与登录皮肤站，配置项 <code>[[RegistrationOIDC]]</code> 支持多 provider、PKCE、邀请码要求、是否允许自定义角色名等选项；</li>
+<li><strong>绑定 OIDC 后禁用密码</strong>：<code>auth.go</code> 中 <code>verifyCredentials</code> 明确——若用户已绑定 OIDC 身份，则密码登录直接失败；<code>configuration.md</code> 同样写明「绑定 OIDC provider 后，用户将无法再使用密码登录 Drasl 网页或 Minecraft」；</li>
+<li><strong><code>AllowPasswordLogin</code> 配置</strong>：可关闭密码注册/登录，强制所有用户走 OIDC；</li>
+<li><strong><code>MinecraftToken</code> 机制</strong>：drasl 支持将 <code>MinecraftToken</code> 作为密码等价物（类似应用密码），<code>authenticate</code> 中先比对 MinecraftToken 再比对密码哈希。</li>
+</ul>
+<p>也就是说，drasl 属于「OIDC 登录皮肤站 ✅ / OAuth 获取游戏令牌 ❌」的阵营——它的 OIDC 解决的是「登录皮肤站」（无密码用户进站），与 element-skin 的外部身份定位类似，都没有解决「启动器如何免密拿游戏令牌」的问题。</p>
+<h3 id="44-小结">4.4 小结</h3>
+<p>综合以上调研，各项目在「OIDC 登录皮肤站」与「OAuth 获取游戏令牌」两个维度上的情况如下（基于开源代码、官方手册与站点 meta，生产内部实现未逐一验证）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项目</th><th>OIDC 登录皮肤站</th><th>OAuth 获取游戏令牌</th></tr></thead><tbody><tr><td>yggdrasil-connect + Janus（开源）</td><td>✅</td><td>✅（id_token selectedProfile claim）</td></tr><tr><td>LittleSkin 手册记载的专属 API</td><td>—（手册未详述）</td><td>✅（专属换令牌 API 设计）</td></tr><tr><td>LittleSkin 生产站（meta 证实）</td><td>✅（meta 声明 OAuth 端点）</td><td>未验证（实现与开源不同）</td></tr><tr><td>element-skin</td><td>✅（外部身份）</td><td>❌</td></tr><tr><td>drasl</td><td>✅（OIDC 身份）</td><td>❌</td></tr><tr><td>SJMCL（客户端）</td><td>—</td><td>✅（id_token selectedProfile）</td></tr></tbody></table>
+<h2 id="5-一次-yggc-部署实践">5. 一次 YggC 部署实践</h2>
+<h3 id="51-背景">5.1 背景</h3>
+<p>我为 <a href="https://mualliance.cn/">Minecraft 高校联盟（MUA）</a> 的文档站贡献过一篇 <a href="https://docs.mualliance.cn/zh/dev/skin-docker">Docker 部署皮肤站（Blessing Skin + Janus）</a> 教程。需要说明的是：虽然我具有部门干事身份，但是<strong>我当前只是 MUA 联合皮肤站的普通用户</strong>，并未参与其维护工作；部署教程的完整踩坑过程是我的第一手经验。</p>
+<p>USTC Minecraft 社区曾基于该教程实际部署过整套方案。</p>
+<h3 id="52-部署架构">5.2 部署架构</h3>
+<p>该方案由四个服务组成，通过 Docker Compose 编排：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>┌─────────────┐     ┌──────────────┐</span></span>
+<span class="line"><span>│  Blessing   │     │    Janus     │</span></span>
+<span class="line"><span>│  Skin v6    │◀───▶│ (OIDC 服务端) │</span></span>
+<span class="line"><span>│ + yggc 插件 │     │  NestJS      │</span></span>
+<span class="line"><span>└─────────────┘     └──────────────┘</span></span>
+<span class="line"><span>       │                    │</span></span>
+<span class="line"><span>       └────────┬───────────┘</span></span>
+<span class="line"><span>                ▼</span></span>
+<span class="line"><span>        ┌──────────────┐</span></span>
+<span class="line"><span>        │  MariaDB     │ (共享数据库)</span></span>
+<span class="line"><span>        └──────────────┘</span></span>
+<span class="line"><span>        ┌──────────────┐</span></span>
+<span class="line"><span>        │  Redis       │ (缓存/会话)</span></span>
+<span class="line"><span>        └──────────────┘</span></span></code></pre>
+<ul>
+<li><strong>Blessing Skin Server v6.0.2</strong>（PHP 8.1 + Apache）：提供站点功能与 Yggdrasil API（通过 yggdrasil-connect 插件）；</li>
+<li><strong>Janus</strong>（Node.js 22 + NestJS + node-oidc-provider）：外挂的 OpenID Connect 服务端，与 Blessing Skin 共享 MariaDB；</li>
+<li><strong>MariaDB</strong>：共享数据库（Janus 通过 Prisma 管理其表结构）；</li>
+<li><strong>Redis</strong>：缓存与会话。</li>
+</ul>
+<h3 id="53-部署中的痛点">5.3 部署中的痛点</h3>
+<p>以下是部署教程中记录的实际痛点：</p>
+<ul>
+<li><strong>Janus 非开箱即用</strong>：需要手动编写 Dockerfile 构建（Node 22）；Prisma 迁移需手工处理：先 <code>migrate resolve --applied 0_init</code> 标记初始迁移，且<strong>不能应用</strong> <code>20250618204012_init_janus</code> 迁移（否则与 Blessing Skin 已有表冲突）；</li>
+<li><strong>子目录部署需改源码</strong>：Janus 默认根路径部署；部署到子目录（如 <code>/api/janus</code>）需要修改三处源码：<code>app.controller.ts</code>（路由前缀）、<code>main.ts</code>（<code>setGlobalPrefix</code>）、<code>oidc-provider.service.ts</code>（interaction URL）；</li>
+<li><strong>配置链长且易错</strong>：Client ID 需在 <code>Blessing .env</code> 的 <code>PASSPORT_PERSONAL_ACCESS_CLIENT_ID</code>、<code>Janus .env</code> 的 <code>SHARED_CLIENT_ID</code>、OAuth2 应用回调 URL（<code>/yggc/client/public</code>）三处同步；<code>docker-compose.yml</code> 中占位符若含尖括号会导致解析失败；</li>
+<li><strong>版本兼容脆弱</strong>：Blessing Skin v6.0.2 稳定版基于 Laravel 9，最高仅支持 PHP 8.1（2025-12-31 EOL，见 <a href="https://github.com/bs-community/blessing-skin-server/issues/674">issue #674</a>）；dev 分支已升级 Laravel 10 但无正式版；插件与 Blessing 开发版的兼容问题会导致 <code>invalid_scopes</code> 错误，需要禁用再启用插件；</li>
+<li><strong>站点易整体故障</strong>：插件配置修改后需禁用再启用；测试中常遇 OAuth、Yggdrasil 乃至全站一起返回 500/404，严重时只能重新部署。</li>
+</ul>
+<p>验证步骤也值得记录：部署完成后，需要确认 Yggdrasil 端点 meta 中出现 <code>feature.openid_configuration_url</code>，且 OpenID 元数据中所有 URL 都带子目录前缀并有正确的 <code>shared_client_id</code>，最后用支持 YggC 的启动器实际完成一次 OAuth 登录。</p>
+<h3 id="54-ustcmc-社区的实践">5.4 USTCMC 社区的实践</h3>
+<p>现在还有一个问题没回答：为什么连 Blessing Skin 本身都弃用？</p>
+<p>在 2026 年 2 月之后、部署该架构皮肤站之前，USTCMC 社区开始使用 element-skin 作为主要的皮肤站。我曾在 USTCMC 社区基于上述教程部署该方案，<strong>两个月后全站弃用</strong>，回到 element-skin。</p>
+<p>需要先澄清：5.3 节记录的是 YggC 特有的部署痛点，而「为什么连 Blessing Skin 本身都弃用」是另一个问题——因为按常规思路部署 Blessing Skin + yggdrasil-connect（不启用 OAuth 也行）同样有现成教程、同样方便，<strong>部署复杂度本身并不能完全解释弃用</strong>。结合社区反馈与第三方部署教程的记录，真正的原因可以归结为三层：</p>
+<p><strong>代码质量问题</strong>。即便绕开 YggC，Blessing Skin 自身的代码问题也不少。第三方部署教程（<a href="https://gbwater.icu/post/100">部署 Minecraft 皮肤站实现外置登录</a>，GBwater，2025-11）记录了常规部署（不含 Janus）中遇到的问题：官方不提供 Docker 镜像，需要自建镜像并处理国内网络换源；源码中写死绝对路径，导致子目录部署必须依赖 nginx <code>sub_filter</code> 对 HTML/JS 做暴力替换（<code>/meta.js</code>、<code>/lang/</code> 等资源路径），还要手动关闭资源文件地址的自动判断——教程作者的原话是「作者到底写了多少 bug」。这类问题与 YggC 无关，意味着即使作为普通皮肤站，其日常体验也低于对现代应用的预期。</p>
+<p><strong>新应用设计风格与社区惯性</strong>。element-skin 是全新设计的实现（Go + Vue、API 干净、配置简单），功能（材质管理、外部身份）已覆盖社区需求且持续更新，社区成员已习惯其工作流；Blessing Skin 则是 PHP + 插件生态的旧式架构，迁移意味着回到更重的维护模式。新应用的设计风格与社区既有惯性，都指向「留在 element-skin」。</p>
+<p><strong>停滞的社区维护</strong>。Blessing Skin 处于事实上的无人维护状态（<a href="https://github.com/bs-community/blessing-skin-server/issues/674">issue #674</a>，维护者明确「没人维护」），稳定版依赖 PHP 8.1（2025-12-31 EOL），dev 分支升级 Laravel 10 后无正式版。一个当前可用但无人维护、运行时已 EOL 的软件，作为长期基础设施存在明显风险；相比之下 element-skin 保持活跃更新。</p>
+<p>此外，OAuth 登录对普通玩家的实际价值不明显——绝大多数玩家使用密码登录即可；该方案（或者仅使用 YggC）虽有 Union 成员站（MUA 联合皮肤站）的独有功能，但 USTCMC 社区实践中并未感受到 Union 的实际价值（要接 MUA 联合认证服，玩家去 MUA 用户中心自行注册）。加之以上三层原因，我选择了回退。</p>
+<p>这是一个值得玩味的结果：<strong>一套被部署并验证成功的 YggC 方案，最终因为「维护成本 > 用户价值」而被放弃——而这里的「维护成本」不只是 YggC 特有的部署复杂度，还包括 Blessing Skin 本身的代码质量、设计风格与停滞的维护状态</strong>。</p>
+<blockquote><p>USTCMC 有一个从 2020 年运行至今的 Blessing Skin 站点。它的访问是公开的，任何人都可以注册并使用它的认证服务。</p></blockquote>
+<h2 id="6-痛点分析">6. 痛点分析</h2>
+<h3 id="61-协议层">6.1 协议层</h3>
+<p>「OAuth 获取 Minecraft 角色令牌」在协议层面的痛点，本质上是<strong>两套身份系统的缝合问题</strong>：</p>
+<ul>
+<li><strong>两套令牌系统</strong>：OAuth token（站点侧，访问站点 API）与 yggdrasil token（游戏侧，进服验证）完全隔离，需要桥接；</li>
+<li><strong>生命周期不同步</strong>：OAuth 授权失效（refresh token 过期/撤销）与游戏会话失效是两个独立生命周期，需各自处理；</li>
+<li><strong>角色选择</strong>：OAuth 授权页需展示角色列表供用户选择，站点角色模型需要暴露给第三方应用，权限模型又加一层；</li>
+<li><strong>安全模型</strong>：第三方应用持有的游戏令牌可进服，而站点 API 权限（读角色/改材质）与游戏能力（进服）如何通过 scope 精确划分，没有成熟先例；</li>
+<li><strong>进服验证兼容</strong>：服务器 <code>hasJoined</code> 验证逻辑只认 yggdrasil token；若令牌格式变化（如改为 JWT），服务器侧与 authlib-injector 侧都需要兼容。</li>
+</ul>
+<p>以 element-skin 为例：其 yggdrasil 令牌是存储在 Redis 中的随机 UUID（<code>auth.go</code> 中 <code>SetYggToken</code>），与 OAuth access token 完全隔离。任何桥接方案都需要在这两套存储之间建立映射或转换。</p>
+<h3 id="62-生态层">6.2 生态层</h3>
+<p>OAuth 桥接在生态层面的痛点如下：</p>
+<ul>
+<li>无统一标准：YggC 提案被拒后，仅 LittleSkin、MUA 用户中心等站支持 OAuth 换令牌；一些应用仅去实现 OAuth / OIDC 功能，不去兼容 YggC 令牌；</li>
+<li>启动器跟进不一：主流启动器普遍未跟进第三方 OAuth（YggC 讨论中即有启动器作者明确表示无暇跟进）；SJMCL 是少数实现 YggC 客户端的启动器；</li>
+<li>皮肤站实现成本：完整 YggC 需要外挂 OIDC 服务端（Janus）或自研桥接接口，配置链长、维护负担重；</li>
+<li><strong>用户价值存疑</strong>：多数玩家对第三方登录无感知，密码登录「能用」；OAuth 解决的「密码泄露/2FA」问题在社区站场景并非刚需。</li>
+</ul>
+<h3 id="63-部署层">6.3 部署层</h3>
+<p>部署层的痛点见 5.3 节。需要补充的是，「部署成本高」并不只来自 YggC 本身的复杂度：即使按常规思路部署（Blessing Skin + yggdrasil-connect、不启用 OAuth），Blessing Skin 自身也存在代码质量（写死绝对路径、无官方镜像）与维护停滞（issue #674、PHP 8.1 EOL）的问题，见 5.4 节。核心结论是：<strong>完整 YggC 方案（Blessing + Janus）的部署与维护成本，显著高于其带来的用户价值</strong>。USTCMC 社区两个月的部署实践（5.4 节）是这一结论的直接证据。</p>
+<h2 id="7-讨论">7. 讨论</h2>
+<h3 id="71-社区站的根本动力是身份确认">7.1 社区站的根本动力是「身份确认」</h3>
+<p>社区自建皮肤站（而非使用公共验证服务器）的根本动力是「确认你是我们社区的」，密码 + 邀请码（或者别的方案）已能完成这一任务。OAuth 解决的「安全/体验」问题在社区站场景下并非刚需——这也是「密码登录够用」在生态中成为默认状态的原因。</p>
+<h3 id="72-oauth-桥接的价值身份验证方式与游戏令牌解耦">7.2 OAuth 桥接的价值：身份验证方式与游戏令牌解耦</h3>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>传统：社区身份验证（密码） == 游戏身份（yggdrasil token）  ← 只能密码</span></span>
+<span class="line"><span>OAuth：社区身份验证（任意方式）→ 授权 → yggdrasil token  ← 解耦</span></span></code></pre>
+<p>这一解耦对<strong>有特殊身份源需求的站</strong>才有价值：</p>
+<ul>
+<li>社交登录用户（无密码）——LittleSkin 手册中阐述的场景，也是 YggC 提案的动机之一；</li>
+<li>校园统一身份认证（CAS/OIDC）——高校站的场景；</li>
+<li>2FA / 通行密钥——安全敏感场景。</li>
+</ul>
+<h3 id="73-单点方案在无标准时是死路">7.3 单点方案在无标准时是死路</h3>
+<p>在没有统一标准的情况下，皮肤站单方面提供桥接接口，面临「定义了也没人用」（启动器不跟进）与「维护负担自担」的双重困境。这也是 element-skin 选择「标准 OAuth 2.1、不碰 YggC 扩展」的原因之一——在生态未达成共识前，不做单点适配。</p>
+<h3 id="74-我的结论">7.4 我的结论</h3>
+<ul>
+<li>对 USTCMC 社区：element-skin 的密码登录已够用，OAuth 桥接不是刚需；</li>
+<li>对 MUA 联合皮肤站：我未参与维护，但从部署教程的实践经验看，YggC 方案的维护成本偏高；</li>
+<li>对生态：传统密码登录仍是多数皮肤站的合理默认选择；OAuth 的价值仅在特定身份源场景中体现，且需要生态层面的协作（标准、启动器跟进、站点实现）才能落地。</li>
+</ul>
+<h2 id="8-结语">8. 结语</h2>
+<p>本次调研的结论可以概括为三层：</p>
+<ol>
+<li><strong>协议层</strong>：OAuth 与 Yggdrasil 是两套独立的身份系统，桥接没有干净解——令牌、生命周期、安全模型都需要重新设计；</li>
+<li><strong>生态层</strong>：YggC 提案被拒后无统一标准，各站自研（LittleSkin 自建实现、element 标准 OAuth、drasl OIDC 登录），启动器跟进不一；</li>
+<li><strong>实践层</strong>：完整 YggC 部署（Blessing + Janus）成本高、脆弱，实际收益有限——且即便不启用 OAuth，Blessing Skin 自身也存在代码质量与维护停滞的问题。USTCMC 社区两个月的部署后弃用是直接证据。</li>
+</ol>
+<p>对我个人而言，这次调研最大的收获是理解了「技术方案能否落地，社区共识是极大的影响因素」：一个设计良好的协议（YggC）可能因为生态博弈而被搁置，而一个「够用」的方案（密码登录）可以长期存活。</p>
+<hr>
+<h2 id="9-后记">9. 后记</h2>
+<p>社区里还有一批开源方案，它们同样没有去实现 OAuth 获取游戏令牌，但在其他功能上做得非常出色。</p>
+<h3 id="91-yudream-admin通用管理平台里的皮肤站">9.1 YuDream Admin：通用管理平台里的皮肤站</h3>
+<p><a href="https://github.com/mcyudream/YuDream-Admin">YuDream Admin</a> 是一个以 Java 21、Spring Boot 3 和 Vue 3 构建的<strong>通用管理平台</strong>，通过插件运行时将业务功能与平台核心解耦。它本身不是皮肤站，而是「可以作为宿主平台承载业务插件」的底座，其官方业务插件仓库 <a href="https://github.com/mcyudream/yudream-admin-plugins">yudream-admin-plugins</a> 中与 Minecraft 相关的插件包括：</p>
+<ul>
+<li><strong><code>authlib-injector</code> 插件</strong>：实现了标准 Yggdrasil API（<code>/authserver/authenticate</code>、<code>refresh</code>、<code>join</code>、<code>hasJoined</code>、<code>profile</code> 等），通过平台系统用户（<code>accountSource: "system-user"</code>）进行<strong>密码登录</strong>。其 meta 输出中<strong>没有</strong> <code>feature.openid_configuration_url</code>，也<strong>没有实现任何 OAuth/YggC</strong>；</li>
+<li><strong><code>yudream-skin</code> 插件</strong>：皮肤系统（角色、材质、衣柜、迁移等），通过 <code>PluginSkinService</code> SPI 与 authlib-injector 插件协作；</li>
+<li>其他插件：<code>minecraft-server</code>（服务器管理）、<code>minecraft-activity-proof</code>（活动证明）、<code>qq-binding</code>（QQ 绑定）、<code>qqbot-automation</code>（QQ 机器人自动化）等。</li>
+</ul>
+<p>在正文 4.4 小结的两个维度上，YuDream 属于「<strong>OIDC 登录皮肤站 ❌ / OAuth 获取游戏令牌 ❌</strong>」，它完全走传统密码登录路线。但它的价值恰恰在于<strong>平台化</strong>：把皮肤站、服务器管理、QQ 绑定、机器人自动化等能力统一到一个插件化底座上，这对「既要皮肤站、又要社区运营工具」的站点很有吸引力。它印证了正文 7.1 的判断——社区站的根本动力是「身份确认」，密码登录已能完成，而 YuDream 选择把精力放在「身份之外」的社区功能上。</p>
+<h3 id="92-社区教程传统密码与-yggc-两条路线的并存">9.2 社区教程：传统密码与 YggC 两条路线的并存</h3>
+<p>另有两篇 B 站社区教程，代表了「传统密码」与「YggC」两条路线的社区实践：</p>
+<ul>
+<li><a href="https://www.bilibili.com/opus/1205570442142679042">四氧化三猫的《全站最详细开服教程》</a>（2026-05）：用 Caddy + PHP 8.1 + MySQL 部署 <strong>Blessing Skin + yggdrasil-api 插件</strong>，走的是<strong>传统密码登录</strong>（非 YggC），面向新手保姆级教学；</li>
+<li><a href="https://www.bilibili.com/opus/1202506743186194433">江苏大学 Minecraft 同好会的《开箱即用的 Blessing Skin 容器化部署方案》</a>（2026-05）：基于 <a href="https://github.com/Dainsleif233/skin-docker">Dainsleif233/skin-docker</a>，<strong>实现了 YggC</strong>（Janus + yggdrasil-connect 插件），解决了「BS 无容器化方案 + YggC 需外挂 Janus」的痛点；作者在评论中也提到「如果没有拓展性需求，建议用 Drasl 这种部署友好的项目」。</li>
+</ul>
+<p>这两篇教程说明：即便在社区层面，<strong>「传统密码」与「YggC」两条路线也在并存</strong>——前者面向「够用就好」的多数场景，后者面向「需要 OAuth 拓展性」的少数场景。这与正文的结论一致：OAuth 桥接的价值只在特定身份源场景中体现，而社区生态的多样性恰恰是「无统一标准」下的自然结果。</p>
+<hr>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="https://github.com/yushijinhun/authlib-injector/issues/268">Yggdrasil Connect Specification (Public Review) - authlib-injector issue #268</a></li>
+<li><a href="https://yushijinhun.github.io/authlib-injector/zh/Home.html">authlib-injector wiki（中文）</a></li>
+<li><a href="https://yushijinhun.github.io/authlib-injector/zh/Yggdrasil-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%8A%80%E6%9C%AF%E8%A7%84%E8%8C%83.html">Yggdrasil 服务端技术规范 - authlib-injector wiki</a></li>
+<li><a href="https://github.com/SJMC-Dev/SJMCL">SJMCL - GitHub</a></li>
+<li><a href="https://github.com/SJMC-Dev/SJMCL-client-ids">SJMCL client IDs 列表 - GitHub</a></li>
+<li><a href="https://github.com/water2004/element-skin">element-skin - GitHub</a></li>
+<li><a href="https://github.com/bs-community/blessing-skin-server">Blessing Skin Server - GitHub</a></li>
+<li><a href="https://github.com/bs-community/blessing-skin-plugins">Blessing Skin 插件仓库（yggdrasil-api / yggdrasil-connect）- GitHub</a></li>
+<li><a href="https://github.com/bs-community/janus">Janus - GitHub</a></li>
+<li><a href="https://github.com/LittleSkinChina/manual-ng/blob/master/docs/feature/oauth-for-yggdrasil.md">LittleSkin 手册 - Yggdrasil Connect / 通过 OAuth 访问 Yggdrasil API</a></li>
+<li><a href="https://github.com/LittleSkinChina/manual-ng/blob/master/docs/advanced/api.md">LittleSkin 手册 - LittleSkin API（获取 Minecraft 令牌）</a></li>
+<li><a href="https://github.com/drasl-project/drasl">drasl - GitHub</a></li>
+<li><a href="https://docs.mualliance.cn/zh/dev/skin-docker">Docker 部署皮肤站（Blessing Skin + Janus）- MUA 资料站</a></li>
+<li><a href="https://mualliance.cn/">Minecraft 高校联盟（MUA）</a></li>
+<li><a href="https://github.com/LittleSkinChina/manual-ng/blob/master/docs/email.md">LittleSkin 邮件工单说明（对外支持邮箱）</a></li>
+<li><a href="https://github.com/bs-community/blessing-skin-server/issues/674">Blessing Skin Server issue #674 - PHP 8.1 终止维护与维护状态声明</a></li>
+<li><a href="https://gbwater.icu/post/100">部署 Minecraft 皮肤站实现外置登录 - GBwater 的博客</a></li>
+<li><a href="https://github.com/mcyudream/YuDream-Admin">YuDream Admin - GitHub</a></li>
+<li><a href="https://github.com/mcyudream/yudream-admin-plugins">YuDream Admin 官方业务插件仓库（authlib-injector / yudream-skin 等）- GitHub</a></li>
+<li><a href="https://www.bilibili.com/opus/1205570442142679042">全站最详细开服教程（Blessing Skin + yggdrasil-api 传统密码登录）- 四氧化三猫，Bilibili</a></li>
+<li><a href="https://www.bilibili.com/opus/1202506743186194433">开箱即用的 Blessing Skin 容器化部署方案（YggC + Janus）- 江苏大学 Minecraft 同好会，Bilibili</a></li>
+</ol></article><hr class="my-8 border-dashed"><div id="btt-btn-container" class="fixed inset-e-4 bottom-8 z-50 md:sticky md:inset-e-auto md:float-end md:me-1 translate-y-14 opacity-0 transition duration-500"><button data-button="back-to-top" class="group bg-background relative px-2 py-1 size-14 rounded-full shadow-xl md:h-8 md:w-fit md:rounded-md md:shadow-none md:focus-visible:rounded-none md:bg-background/35 md:bg-clip-padding md:backdrop-blur-lg"><span id="progress-indicator" class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"></span><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block rotate-90 md:hidden" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 12h14M5 12l6 6M5 12l6-6" /></svg><span class="group-hover:text-accent sr-only text-sm md:not-sr-only"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-4" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M12 5v14M16 9l-4-4M8 9l4-4" /></svg>Back to top</span></button></div><script data-astro-rerun>
+  function backToTop() {
+    const rootElement = document.documentElement;
+    const btnContainer = document.querySelector("#btt-btn-container");
+    const backToTopBtn = document.querySelector("[data-button='back-to-top']");
+    const progressIndicator = document.querySelector("#progress-indicator");
+
+    if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator)
+      return;
+
+    backToTopBtn.addEventListener("click", () => {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    });
+
+    let lastVisible = null;
+    function handleScroll() {
+      const scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+      const scrollTop = rootElement.scrollTop;
+      const scrollPercent = Math.floor((scrollTop / scrollTotal) * 100);
+
+      progressIndicator.style.setProperty(
+        "background-image",
+        `conic-gradient(var(--accent), var(--accent) ${scrollPercent}%, transparent ${scrollPercent}%)`
+      );
+
+      const isVisible = scrollTop / scrollTotal > 0.3;
+
+      if (isVisible !== lastVisible) {
+        btnContainer.classList.toggle("opacity-100", isVisible);
+        btnContainer.classList.toggle("translate-y-0", isVisible);
+        btnContainer.classList.toggle("opacity-0", !isVisible);
+        btnContainer.classList.toggle("translate-y-14", !isVisible);
+        lastVisible = isVisible;
+      }
+    }
+
+    let ticking = false;
+    document.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+  backToTop();
+</script><ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8"><li><a data-astro-transition-scope="astro-bztu2lml-1" href="/tags/minecraft/" class="flex items-center gap-0.5 border-foreground border-b-2 border-dashed hover:border-accent hover:text-accent hover:-mt-0.5 focus-visible:text-accent focus-visible:border-none text-sm"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="opacity-80 size-4" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 9h14M5 15h14M11 4 7 20M17 4l-4 16" /></svg>Minecraft</a></li><li><a data-astro-transition-scope="astro-bztu2lml-2" href="/tags/oauth/" class="flex items-center gap-0.5 border-foreground border-b-2 border-dashed hover:border-accent hover:text-accent hover:-mt-0.5 focus-visible:text-accent focus-visible:border-none text-sm"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="opacity-80 size-4" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 9h14M5 15h14M11 4 7 20M17 4l-4 16" /></svg>OAuth</a></li><li><a data-astro-transition-scope="astro-bztu2lml-3" href="/tags/yggdrasil/" class="flex items-center gap-0.5 border-foreground border-b-2 border-dashed hover:border-accent hover:text-accent hover:-mt-0.5 focus-visible:text-accent focus-visible:border-none text-sm"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="opacity-80 size-4" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 9h14M5 15h14M11 4 7 20M17 4l-4 16" /></svg>Yggdrasil</a></li><li><a data-astro-transition-scope="astro-bztu2lml-4" href="/tags/skinstation/" class="flex items-center gap-0.5 border-foreground border-b-2 border-dashed hover:border-accent hover:text-accent hover:-mt-0.5 focus-visible:text-accent focus-visible:border-none text-sm"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="opacity-80 size-4" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 9h14M5 15h14M11 4 7 20M17 4l-4 16" /></svg>SkinStation</a></li></ul><hr class="my-8 border-dashed"><div data-pagefind-ignore class="my-8 grid grid-cols-1 gap-6 sm:grid-cols-2"><a href="/posts/computer-diy-1/" class="flex w-full gap-1 hover:opacity-75"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block flex-none rtl:rotate-180" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 12h14M5 12l6 6M5 12l6-6" /></svg><div><span>Previous Post</span><div class="text-accent/85 text-sm">空明流的PC折腾史</div></div></a><a href="/posts/vscode-oai/" class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"><div><span>Next Post</span><div class="text-accent/85 text-sm">在 VSCode 使用自定义模型</div></div><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block flex-none rtl:rotate-180" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 12h14M13 18l6-6M13 6l6 6" /></svg></a></div></main><footer class="app-layout mt-auto"><div class="border-border flex flex-col items-center justify-between border-t py-6 sm:flex-row-reverse sm:py-4"><div class="flex flex-wrap items-center gap-1"><a href="https://github.com/Lylighte" title="LyerNest on Github" class="group inline-flex items-center gap-1 hover:text-accent p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg><span class="sr-only">LyerNest on Github</span></a><a href="mailto:lylighte@mail.ustc.edu.cn" title="Send an email to LyerNest" class="group inline-flex items-center gap-1 hover:text-accent p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><path d="m3 7 9 6 9-6" /></svg><span class="sr-only">Send an email to LyerNest</span></a></div><div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"><span>Copyright &#169; 2026</span><span class="hidden sm:inline">&nbsp;|&nbsp;</span><!-- <span>{t.footer.allRightsReserved}</span> --><span><a href="https://beian.miit.gov.cn" target="_blank" rel="noopener">苏ICP备2025196817号</a></span><span class="hidden sm:inline">&nbsp;|&nbsp;</span><span><a href="https://beian.mps.gov.cn/#/query/webSearch?code=32130202081405" target="_blank" rel="noopener">苏公网安备 32130202081405号</a></span></div></div></footer><script type="module">var e=`theme`,t=`light`,n=`dark`;function r(){return localStorage.getItem(e)||(window.matchMedia(`(prefers-color-scheme: dark)`).matches?n:t)}var i=window.__theme?.value??r();function a(){localStorage.setItem(e,i),o()}function o(){let e=document.firstElementChild;e?.setAttribute(`data-theme`,i),e?.classList.toggle(`dark`,i===n),document.querySelector(`#theme-btn`)?.setAttribute(`aria-label`,i);let t=window.getComputedStyle(document.body).backgroundColor;document.querySelector(`meta[name='theme-color']`)?.setAttribute(`content`,t)}function s(){o(),document.querySelector(`#theme-btn`)?.addEventListener(`click`,()=>{i=i===t?n:t,a()})}s(),document.addEventListener(`astro:after-swap`,s),document.addEventListener(`astro:before-swap`,e=>{let t=document.querySelector(`meta[name='theme-color']`)?.getAttribute(`content`);t&&e.newDocument.querySelector(`meta[name='theme-color']`)?.setAttribute(`content`,t)}),window.matchMedia(`(prefers-color-scheme: dark)`).addEventListener(`change`,({matches:e})=>{i=e?n:t,a()});</script></body></html><script data-astro-rerun>
+  function createProgressBar() {
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    progressContainer.appendChild(progressBar);
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  function updateScrollProgress() {
+    document.addEventListener("scroll", () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      if (document) {
+        const myBar = document.getElementById("myBar");
+        if (myBar) {
+          myBar.style.width = scrolled + "%";
+        }
+      }
+    });
+  }
+  updateScrollProgress();
+
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      const computedStyle = getComputedStyle(codeBlock);
+      const hasFileNameOffset =
+        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+
+      const topClass = hasFileNameOffset
+        ? "top-(--file-name-offset)"
+        : "-top-3";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /** Accessible image lightbox for article images. */
+  function initLightbox() {
+    const article = document.getElementById("article");
+    if (!article) return;
+
+    const prefersReducedMotion = () =>
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let overlay = null;
+    let lastFocused = null;
+
+    // Defer attribute mutations so they don't push the LCP timestamp.
+    // Event listeners below use delegation and don't need the attributes to exist yet.
+    requestAnimationFrame(() => {
+      const images = Array.from(article.querySelectorAll("img"));
+      for (const image of images) {
+        if (image.closest("a")) continue;
+        image.setAttribute("role", "button");
+        image.setAttribute("tabindex", "0");
+        image.setAttribute("aria-haspopup", "dialog");
+        image.setAttribute(
+          "aria-label",
+          image.alt ? `Zoom image: ${image.alt}` : "Zoom image"
+        );
+      }
+    });
+
+    function open(src, alt, trigger) {
+      if (overlay) return;
+      lastFocused = trigger ?? document.activeElement;
+
+      overlay = document.createElement("div");
+      overlay.setAttribute("role", "dialog");
+      overlay.setAttribute("aria-modal", "true");
+      overlay.setAttribute(
+        "aria-label",
+        alt ? `Image preview: ${alt}` : "Image preview"
+      );
+      overlay.className =
+        "fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-black/70 backdrop-blur-sm opacity-0 transition-opacity duration-200 motion-reduce:transition-none";
+
+      const closeButton = document.createElement("button");
+      closeButton.type = "button";
+      closeButton.setAttribute("aria-label", "Close image preview");
+      closeButton.className =
+        "absolute end-4 top-4 rounded p-2 text-3xl leading-none text-white";
+      closeButton.innerHTML = "&#10005;";
+      closeButton.addEventListener("click", close);
+
+      const image = document.createElement("img");
+      image.src = src;
+      image.alt = "";
+      image.className =
+        "max-h-[90dvh] max-w-[90dvw] cursor-default object-contain";
+
+      overlay.append(closeButton, image);
+      overlay.addEventListener("click", e => {
+        if (e.target === overlay && currentScale <= 1) close();
+      });
+
+      let currentScale = 1;
+      let translateX = 0;
+      let translateY = 0;
+      let initialDist = 0;
+      let initialScale = 1;
+      let panStartX = 0;
+      let panStartY = 0;
+      let panStartTranslateX = 0;
+      let panStartTranslateY = 0;
+      let lastTapTime = 0;
+
+      function applyTransform() {
+        image.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+      }
+
+      function resetTransform() {
+        currentScale = 1;
+        translateX = 0;
+        translateY = 0;
+        image.style.transform = "";
+      }
+
+      overlay.addEventListener(
+        "touchstart",
+        e => {
+          const t = e.touches;
+          if (t.length === 2) {
+            initialDist = Math.hypot(
+              t[1].clientX - t[0].clientX,
+              t[1].clientY - t[0].clientY
+            );
+            initialScale = currentScale;
+          } else if (t.length === 1) {
+            const now = Date.now();
+            if (now - lastTapTime < 300) {
+              e.preventDefault();
+              if (currentScale > 1) {
+                resetTransform();
+              } else {
+                currentScale = 2;
+                translateX = 0;
+                translateY = 0;
+                applyTransform();
+              }
+              lastTapTime = 0;
+              panStartX = t[0].clientX;
+              panStartY = t[0].clientY;
+              panStartTranslateX = translateX;
+              panStartTranslateY = translateY;
+            } else {
+              lastTapTime = now;
+              if (currentScale > 1) {
+                panStartX = t[0].clientX;
+                panStartY = t[0].clientY;
+                panStartTranslateX = translateX;
+                panStartTranslateY = translateY;
+              }
+            }
+          }
+        },
+        { passive: false }
+      );
+
+      overlay.addEventListener(
+        "touchmove",
+        e => {
+          const t = e.touches;
+          if (t.length === 2) {
+            e.preventDefault();
+            const dist = Math.hypot(
+              t[1].clientX - t[0].clientX,
+              t[1].clientY - t[0].clientY
+            );
+            currentScale = Math.min(
+              4,
+              Math.max(1, initialScale * (dist / initialDist))
+            );
+            applyTransform();
+          } else if (t.length === 1) {
+            if (currentScale > 1) {
+              e.preventDefault();
+              translateX =
+                panStartTranslateX + (t[0].clientX - panStartX) / currentScale;
+              translateY =
+                panStartTranslateY + (t[0].clientY - panStartY) / currentScale;
+              const maxX = Math.max(
+                0,
+                (image.clientWidth - overlay.clientWidth / currentScale) / 2
+              );
+              const maxY = Math.max(
+                0,
+                (image.clientHeight - overlay.clientHeight / currentScale) / 2
+              );
+              translateX = Math.min(maxX, Math.max(-maxX, translateX));
+              translateY = Math.min(maxY, Math.max(-maxY, translateY));
+              applyTransform();
+            } else {
+              e.preventDefault();
+            }
+          }
+        },
+        { passive: false }
+      );
+
+      overlay.addEventListener("touchend", e => {
+        if (e.touches.length === 0 && currentScale <= 1.05) {
+          resetTransform();
+        }
+      });
+
+      overlay.addEventListener("touchcancel", e => {
+        if (e.touches.length === 0 && currentScale <= 1.05) {
+          resetTransform();
+        }
+      });
+
+      document.body.appendChild(overlay);
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", onKeyDown);
+      window.__closeLightbox = close;
+
+      requestAnimationFrame(() => overlay?.classList.add("opacity-100"));
+      closeButton.focus();
+    }
+
+    function close() {
+      if (!overlay) return;
+      const el = overlay;
+      overlay = null;
+      window.__closeLightbox = null;
+
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+      lastFocused?.focus();
+      lastFocused = null;
+
+      if (prefersReducedMotion()) {
+        el.remove();
+        return;
+      }
+      const remove = () => el.remove();
+      el.addEventListener("transitionend", remove, { once: true });
+      setTimeout(remove, 250); // fallback in case transitionend never fires
+      el.classList.remove("opacity-100");
+    }
+
+    function onKeyDown(e) {
+      if (e.key === "Escape") {
+        close();
+      } else if (e.key === "Tab") {
+        trapFocus(e);
+      }
+    }
+
+    // Keep keyboard focus inside the open dialog.
+    function trapFocus(e) {
+      if (!overlay) return;
+      const focusables = overlay.querySelectorAll(
+        'a[href], button, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    function triggerFromEvent(e) {
+      const image = e.target.closest("img");
+      if (!image || !article.contains(image) || image.closest("a")) return null;
+      return image;
+    }
+
+    function activate(image) {
+      open(image.currentSrc || image.src, image.alt, image);
+    }
+
+    article.addEventListener("click", e => {
+      const image = triggerFromEvent(e);
+      if (!image) return;
+      e.preventDefault();
+      activate(image);
+    });
+
+    article.addEventListener("keydown", e => {
+      if (e.key !== "Enter" && e.key !== " " && e.key !== "Spacebar") return;
+      const image = triggerFromEvent(e);
+      if (!image) return;
+      e.preventDefault();
+      activate(image);
+    });
+  }
+  initLightbox();
+
+  if (!window.__lightboxSwapBound) {
+    window.__lightboxSwapBound = true;
+    document.addEventListener("astro:before-swap", () =>
+      window.__closeLightbox?.()
+    );
+  }
+
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>
